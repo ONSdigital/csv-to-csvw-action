@@ -188,8 +188,7 @@ runs:
 
     # TODO: if publish-to-gh-pages is set to true, commit the working directory out/ to the gh-pages and generate the gh-page html.
     - name: Publish CSV-Ws and logs to GitHub Pages
-      if: |
-        ${{ (fromJSON(steps.build-and-inspect-inputs.outputs.has_outputs) == true) && (fromJSON(inputs.publish-to-gh-pages) == true) }}
+      if: ${{ (fromJSON(steps.build-and-inspect-inputs.outputs.has_outputs) == true) && (fromJSON(inputs.publish-to-gh-pages) == true) }}
       run: |
         echo "publish-to-gh-pages: ${{ inputs.publish-to-gh-pages }}"
         echo "publish-to-gh-pages: ${{ fromJSON(inputs.publish-to-gh-pages) }}"
