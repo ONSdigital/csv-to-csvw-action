@@ -182,7 +182,7 @@ runs:
 
     - name: Publish CSV-Ws and logs to GitHub Pages
       if: |
-        ${{ fromJSON(steps.build-and-inspect-inputs.outputs.has_outputs) == true && fromJSON(inputs.commit-and-deploy-outputs-to-github-pages) == true }}
+        ${{ (fromJSON(steps.build-and-inspect-inputs.outputs.has_outputs) == true) && (fromJSON(inputs.commit-and-deploy-outputs-to-github-pages) == true }})
       run: |
         echo "commit-and-deploy-outputs-to-github-pages: ${{ inputs.commit-and-deploy-outputs-to-github-pages }}"
         echo "commit-and-deploy-outputs-to-github-pages: ${{ fromJSON(inputs.commit-and-deploy-outputs-to-github-pages) }}"
