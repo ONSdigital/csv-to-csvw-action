@@ -63,7 +63,7 @@ runs:
       shell: bash
 
     - name: Commit generated CSV-Ws and logs to the repository
-      if: $steps.build-and-inspect-inputs.outputs.has_outputs == true
+      #if: $steps.build-and-inspect-inputs.outputs.has_outputs == true
       run: |
         echo $'\nCommitting CSV-Ws\n'
         git add out/
@@ -72,14 +72,14 @@ runs:
       shell: bash
 
     - name: Publish CSV-Ws and logs to artefacts
-      if: $steps.build-and-inspect-inputs.outputs.has_outputs == true
+      #if: $steps.build-and-inspect-inputs.outputs.has_outputs == true
       uses: actions/upload-artifact@v2
       with:
         name: assets-for-download
         path: out
 
     - name: Publish CSV-Ws and logs to GitHub Pages
-      if: $steps.build-and-inspect-inputs.outputs.has_outputs == true
+      #if: $steps.build-and-inspect-inputs.outputs.has_outputs == true
       run: |
         echo "Publishing to GitHub Pages"
         git checkout -b gh-pages
