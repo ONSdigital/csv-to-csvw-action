@@ -52,11 +52,11 @@ jobs:
       - name: Process all deleted files
         id: process-deleted-files
         run: |
-          deleted_files=${{steps.get-added-changed-removed-files.outputs.removed}}
+          deleted_files=$steps.get-added-changed-removed-files.outputs.removed
           bash scripts/handle_deleted_files.sh $deleted_files
 
       - name: Commit generated CSV-Ws and logs to the repository
-        if: ${{ fromJSON(steps.build-and-inspect-inputs.outputs.has_outputs) == true }}
+        if: $steps.build-and-inspect-inputs.outputs.has_outputs == true
         run: |
           echo $'\nCommitting CSV-Ws\n'
           git add out/
@@ -64,14 +64,14 @@ jobs:
           git push
 
       - name: Publish CSV-Ws and logs to artefacts
-        if: ${{ fromJSON(steps.build-and-inspect-inputs.outputs.has_outputs) == true }}
+        if: $steps.build-and-inspect-inputs.outputs.has_outputs == true
         uses: actions/upload-artifact@v2
         with:
           name: assets-for-download
           path: out
 
       - name: Publish CSV-Ws and logs to GitHub Pages
-        if: ${{ fromJSON(steps.build-and-inspect-inputs.outputs.has_outputs) == true }}
+        if: $steps.build-and-inspect-inputs.outputs.has_outputs == true
         run: |
           echo "Publishing to GitHub Pages"
           git checkout -b gh-pages
