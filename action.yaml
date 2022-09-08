@@ -8,6 +8,20 @@ on:
   push:
     branches:
       - main
+
+runs:
+  using: composite
+  steps:
+    - name: View working directory
+      run: ls -la $GITHUB_WORKSPACE
+      shell: bash
+
+    - name: Configure git
+      run: |
+          git config --global user.name "CSV-W from csv upload generator"
+          git pull
+      shell: bash
+
 jobs:
   generate_csvw_from_csv_upload:
     name: Generate CSV-W from csv upload
@@ -28,14 +42,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-
-      - name: View working directory
-        run: ls -la $GITHUB_WORKSPACE
-
-      - name: Configure git
-        run: |
-          git config --global user.name "CSV-W from csv upload generator"
-          git pull
 
       - name: Get all added/changed/removed files
         id: get-added-changed-removed-files
