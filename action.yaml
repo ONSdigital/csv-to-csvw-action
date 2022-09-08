@@ -5,9 +5,12 @@ branding:
   icon: box
   color: white
 inputs:
-  commit-and-deploy-outputs-to-github-pages:
-    description: Boolean indicating whether the outputs should be published to GitHub Pages.
-    required: true
+  commit-outputs:
+    description: Boolean indicating whether the outputs should be committed to the out folder.
+    default: true
+  publish-to-gh-pages:
+    description: Boolean indicating whether the outputs should be published to GitHub Pages (default is true).
+    required: false
     default: true
 on:
   push:
@@ -172,20 +175,24 @@ runs:
         path: out
 
     - name: Commit generated CSV-Ws and logs to the repository
-      if: ${{ fromJSON(steps.build-and-inspect-inputs.outputs.has_outputs) == true }}
+      if: ${{ (fromJSON(steps.build-and-inspect-inputs.outputs.has_outputs) == true) && (fromJSON(inputs.commit-outputs) == true) }}
       run: |
+        echo "commit-outputs: ${{ inputs.commit-outputs }}"
+        echo "commit-outputs: ${{ fromJSON(inputs.commit-outputs) }}"
+        
         echo $'\nCommitting CSV-Ws\n'
         git add out/
         git commit -m "CSV-Ws generated from csv upload - $(date +'%d-%m-%Y at %H:%M:%S')"
         git push
       shell: bash
 
+    # TODO: if publish-to-gh-pages is set to true, commit the working directory out/ to the gh-pages and generate the gh-page html.
     - name: Publish CSV-Ws and logs to GitHub Pages
       if: |
-        ${{ (fromJSON(steps.build-and-inspect-inputs.outputs.has_outputs) == true) && (fromJSON(inputs.commit-and-deploy-outputs-to-github-pages) == true) }}
+        ${{ (fromJSON(steps.build-and-inspect-inputs.outputs.has_outputs) == true) && (fromJSON(inputs.publish-to-gh-pages) == true) }}
       run: |
-        echo "commit-and-deploy-outputs-to-github-pages: ${{ inputs.commit-and-deploy-outputs-to-github-pages }}"
-        echo "commit-and-deploy-outputs-to-github-pages: ${{ fromJSON(inputs.commit-and-deploy-outputs-to-github-pages) }}"
+        echo "publish-to-gh-pages: ${{ inputs.publish-to-gh-pages }}"
+        echo "publish-to-gh-pages: ${{ fromJSON(inputs.publish-to-gh-pages) }}"
 
         echo $'\n'
         echo "Publishing to GitHub Pages"
