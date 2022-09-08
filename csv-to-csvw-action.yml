@@ -1,5 +1,5 @@
-name: Generate CSV-W from csv upload to repository.
-
+name: CSV-to-CSVW Action
+description: Generate CSV-W from csv upload to repository.
 on:
   push:
     branches:
