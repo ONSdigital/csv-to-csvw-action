@@ -1,9 +1,11 @@
 name: csv-to-csvw action
 description: Generate CSV-W from csv upload to repository.
 author: Connected Open Government Statistics (COGS)
+
 branding:
   icon: box
   color: white
+
 on:
   push:
     branches:
@@ -12,87 +14,88 @@ on:
 runs:
   using: composite
   steps:
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
+
+    - name: Install csvcubed
+      run: pip install csvcubed
+      shell: bash
+
+    - name: Verify csvcubed installation
+      run: csvcubed version
+      shell: bash
+
+    - name: Check out repository
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
     - name: View working directory
       run: ls -la $GITHUB_WORKSPACE
       shell: bash
 
     - name: Configure git
       run: |
-          git config --global user.name "CSV-W from csv upload generator"
-          git pull
+        git config --global user.name "CSV-W from csv upload generator"
+        git pull
       shell: bash
 
-jobs:
-  generate_csvw_from_csv_upload:
-    name: Generate CSV-W from csv upload
-    runs-on: ubuntu-latest
-    steps:
-      - name: Set up Python 3.9
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.9
+    - name: Get all added/changed/removed files
+      id: get-added-changed-removed-files
+      uses: jitterbit/get-changed-files@v1
+      with:
+        format: "csv"
 
-      - name: Install csvcubed
-        run: pip install csvcubed
+    - name: Build and inspect new files
+      id: build-and-inspect-inputs
+      run: |
+        input_files=$steps.get-added-changed-removed-files.outputs.added_modified
+        bash scripts/build_and_inspect_inputs.sh $input_files
+      shell: bash
 
-      - name: Verify csvcubed installation
-        run: csvcubed version
+    - name: Process all deleted files
+      id: process-deleted-files
+      run: |
+        deleted_files=$steps.get-added-changed-removed-files.outputs.removed
+        bash scripts/handle_deleted_files.sh $deleted_files
+      shell: bash
 
-      - name: Check out repository
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
+    - name: Commit generated CSV-Ws and logs to the repository
+      if: $steps.build-and-inspect-inputs.outputs.has_outputs == true
+      run: |
+        echo $'\nCommitting CSV-Ws\n'
+        git add out/
+        git commit -m "CSV-Ws generated from csv upload - $(date +'%d-%m-%Y at %H:%M:%S')"
+        git push
+      shell: bash
 
-      - name: Get all added/changed/removed files
-        id: get-added-changed-removed-files
-        uses: jitterbit/get-changed-files@v1
-        with:
-          format: "csv"
+    - name: Publish CSV-Ws and logs to artefacts
+      if: $steps.build-and-inspect-inputs.outputs.has_outputs == true
+      uses: actions/upload-artifact@v2
+      with:
+        name: assets-for-download
+        path: out
 
-      - name: Build and inspect new files
-        id: build-and-inspect-inputs
-        run: |
-          input_files=$steps.get-added-changed-removed-files.outputs.added_modified
-          bash scripts/build_and_inspect_inputs.sh $input_files
+    - name: Publish CSV-Ws and logs to GitHub Pages
+      if: $steps.build-and-inspect-inputs.outputs.has_outputs == true
+      run: |
+        echo "Publishing to GitHub Pages"
+        git checkout -b gh-pages
+        rm -r LICENSE
+        rm -r README.md
 
-      - name: Process all deleted files
-        id: process-deleted-files
-        run: |
-          deleted_files=$steps.get-added-changed-removed-files.outputs.removed
-          bash scripts/handle_deleted_files.sh $deleted_files
+        repo_name=${GITHUB_REPOSITORY#*/}    
+        username=${GITHUB_REPOSITORY_OWNER}
+        commit_id=${GITHUB_SHA}      
+        mapfile -d ',' -t out_files < <(printf '%s,' $(find . -type f -path '*out/*'))
+        processed_out_files=$(printf ",%s" "${out_files[@]}")
 
-      - name: Commit generated CSV-Ws and logs to the repository
-        if: $steps.build-and-inspect-inputs.outputs.has_outputs == true
-        run: |
-          echo $'\nCommitting CSV-Ws\n'
-          git add out/
-          git commit -m "CSV-Ws generated from csv upload - $(date +'%d-%m-%Y at %H:%M:%S')"
-          git push
+        bash scripts/generate_git_pages_html.sh $repo_name $username $commit_id $processed_out_files
 
-      - name: Publish CSV-Ws and logs to artefacts
-        if: $steps.build-and-inspect-inputs.outputs.has_outputs == true
-        uses: actions/upload-artifact@v2
-        with:
-          name: assets-for-download
-          path: out
-
-      - name: Publish CSV-Ws and logs to GitHub Pages
-        if: $steps.build-and-inspect-inputs.outputs.has_outputs == true
-        run: |
-          echo "Publishing to GitHub Pages"
-          git checkout -b gh-pages
-          rm -r LICENSE
-          rm -r README.md
-
-          repo_name=${GITHUB_REPOSITORY#*/}    
-          username=${GITHUB_REPOSITORY_OWNER}
-          commit_id=${GITHUB_SHA}      
-          mapfile -d ',' -t out_files < <(printf '%s,' $(find . -type f -path '*out/*'))
-          processed_out_files=$(printf ",%s" "${out_files[@]}")
-
-          bash scripts/generate_git_pages_html.sh $repo_name $username $commit_id $processed_out_files
-
-          git add .nojekyll
-          git add index.html
-          git commit -a -m "Updating outputs in GitHub Pages - $(date +'%d-%m-%Y at %H:%M:%S')"
-          git push --set-upstream origin gh-pages -f
+        git add .nojekyll
+        git add index.html
+        git commit -a -m "Updating outputs in GitHub Pages - $(date +'%d-%m-%Y at %H:%M:%S')"
+        git push --set-upstream origin gh-pages -f
+      shell: bash
