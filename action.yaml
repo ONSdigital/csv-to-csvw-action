@@ -8,7 +8,7 @@ inputs:
   commit-and-deploy-outputs-to-github-pages:
     description: Boolean indicating whether the outputs should be published to GitHub Pages.
     required: true
-    default: false
+    default: true
 on:
   push:
     branches:
@@ -164,21 +164,21 @@ runs:
         done
       shell: bash
 
-    # - name: Commit generated CSV-Ws and logs to the repository
-    #   if: ${{ fromJSON(steps.build-and-inspect-inputs.outputs.has_outputs) == true }}
-    #   run: |
-    #     echo $'\nCommitting CSV-Ws\n'
-    #     git add out/
-    #     git commit -m "CSV-Ws generated from csv upload - $(date +'%d-%m-%Y at %H:%M:%S')"
-    #     git push
-    #   shell: bash
-
     - name: Publish CSV-Ws and logs to artefacts
       if: ${{ fromJSON(steps.build-and-inspect-inputs.outputs.has_outputs) == true }}
       uses: actions/upload-artifact@v2
       with:
         name: assets-for-download
         path: out
+
+    - name: Commit generated CSV-Ws and logs to the repository
+      if: ${{ fromJSON(steps.build-and-inspect-inputs.outputs.has_outputs) == true }}
+      run: |
+        echo $'\nCommitting CSV-Ws\n'
+        git add out/
+        git commit -m "CSV-Ws generated from csv upload - $(date +'%d-%m-%Y at %H:%M:%S')"
+        git push
+      shell: bash
 
     - name: Publish CSV-Ws and logs to GitHub Pages
       if: |
