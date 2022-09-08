@@ -164,14 +164,14 @@ runs:
         done
       shell: bash
 
-    - name: Commit generated CSV-Ws and logs to the repository
-      if: ${{ fromJSON(steps.build-and-inspect-inputs.outputs.has_outputs) == true }}
-      run: |
-        echo $'\nCommitting CSV-Ws\n'
-        git add out/
-        git commit -m "CSV-Ws generated from csv upload - $(date +'%d-%m-%Y at %H:%M:%S')"
-        git push
-      shell: bash
+    # - name: Commit generated CSV-Ws and logs to the repository
+    #   if: ${{ fromJSON(steps.build-and-inspect-inputs.outputs.has_outputs) == true }}
+    #   run: |
+    #     echo $'\nCommitting CSV-Ws\n'
+    #     git add out/
+    #     git commit -m "CSV-Ws generated from csv upload - $(date +'%d-%m-%Y at %H:%M:%S')"
+    #     git push
+    #   shell: bash
 
     - name: Publish CSV-Ws and logs to artefacts
       if: ${{ fromJSON(steps.build-and-inspect-inputs.outputs.has_outputs) == true }}
