@@ -52,12 +52,13 @@ runs:
       id: build-and-inspect-inputs
       run: |
         input_files=$steps.get-added-changed-removed-files.outputs.added_modified
-        bash scripts/build_and_inspect_inputs.sh $input_files
+        ./scripts/build_and_inspect_inputs.sh $input_files
       shell: bash
 
     - name: Process all deleted files
       id: process-deleted-files
       run: |
+        ls
         deleted_files=$steps.get-added-changed-removed-files.outputs.removed
         bash scripts/handle_deleted_files.sh $deleted_files
       shell: bash
