@@ -1,16 +1,18 @@
 name: csv-to-csvw action
 description: Generate CSV-W from csv upload to repository.
 author: Connected Open Government Statistics (COGS)
-
 branding:
   icon: box
   color: white
-
+inputs:
+  publish-to-gh-pages:
+    description: Boolean indicating whether the outputs should be published to gihub pages or not.
+    required: true
+    default: false
 on:
   push:
     branches:
       - main
-
 runs:
   using: composite
   steps:
@@ -179,7 +181,9 @@ runs:
         path: out
 
     - name: Publish CSV-Ws and logs to GitHub Pages
-      if: ${{ fromJSON(steps.build-and-inspect-inputs.outputs.has_outputs) == true }}
+      if: |
+        ${{ fromJSON(steps.build-and-inspect-inputs.outputs.has_outputs) == true }} &&
+        ${{ fromJSON(inputs.publish-to-gh-pages) == true }}
       run: |
         echo $'\n'
         echo "Publishing to GitHub Pages"
