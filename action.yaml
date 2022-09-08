@@ -6,7 +6,7 @@ branding:
   color: white
 inputs:
   publish-to-gh-pages:
-    description: Boolean indicating whether the outputs should be published to gihub pages or not.
+    description: Boolean indicating whether the outputs should be published to GitHub Pages.
     required: true
     default: false
 on:
