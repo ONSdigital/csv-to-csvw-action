@@ -5,7 +5,7 @@ branding:
   icon: box
   color: white
 inputs:
-  publish-to-gh-pages:
+  commit-and-deploy-outputs-to-github-pages:
     description: Boolean indicating whether the outputs should be published to GitHub Pages.
     required: true
     default: false
@@ -183,8 +183,11 @@ runs:
     - name: Publish CSV-Ws and logs to GitHub Pages
       if: |
         ${{ fromJSON(steps.build-and-inspect-inputs.outputs.has_outputs) == true }} &&
-        ${{ fromJSON(inputs.publish-to-gh-pages) == true }}
+        ${{ fromJSON(inputs.commit-and-deploy-outputs-to-github-pages) == true }}
       run: |
+        echo "commit-and-deploy-outputs-to-github-pages: ${{ inputs.commit-and-deploy-outputs-to-github-pages }}"
+        echo "commit-and-deploy-outputs-to-github-pages: ${{ fromJSON(inputs.commit-and-deploy-outputs-to-github-pages) }}"
+
         echo $'\n'
         echo "Publishing to GitHub Pages"
         git checkout -b gh-pages
