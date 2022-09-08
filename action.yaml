@@ -51,9 +51,8 @@ runs:
     - name: Build and inspect new files
       id: build-and-inspect-inputs
       run: |
-        echo "::set-output name=has_outputs::false"
-        added_modified_files=${{steps.get-added-changed-removed-files.outputs.added_modified}}
-        echo "added_modified_files: ${added_modified_files[@]}"
+        echo "::set-output name=has_outputs::${{ toJSON(false) }}"
+        mapfile -d ',' -t added_modified_files < <(printf '%s,' '${{ steps.get-added-changed-removed-files.outputs.added_modified }}')
 
         for file in "${added_modified_files[@]}"; do
           echo "${file}"
@@ -112,7 +111,7 @@ runs:
               
               echo "Inspecting CSV-W"
               mapfile -d $'\0' inspectable_files < <(find "${GITHUB_WORKSPACE}/${out_path}" -name "*.csv-metadata.json" -type f -print0)
-            
+              
               for file in "${inspectable_files[@]}"; do
                 echo "Inspecting file ${file}"
                 file_path="${file%.*}"
@@ -121,7 +120,9 @@ runs:
 
                 csvcubed inspect $file > $inspect_output_file
               done
-              echo "::set-output name=has_outputs::true"
+              
+              echo "Finished processing file ${file}"
+              echo "::set-output name=has_outputs::${{ toJSON(true) }}"
             fi
           fi
         done
@@ -130,13 +131,39 @@ runs:
     - name: Process all deleted files
       id: process-deleted-files
       run: |
-        ls
-        deleted_files=$steps.get-added-changed-removed-files.outputs.removed
-        bash scripts/handle_deleted_files.sh $deleted_files
+        echo "::set-output name=has_outputs::${{ toJSON(false) }}"
+        mapfile -d ',' -t deleted_files < <(printf '%s,' '${{ steps.get-added-changed-removed-files.outputs.removed }}')
+        for file in "${deleted_files[@]}"; do
+          file_path="${file%.*}"
+          file_name="${file_path##*/}"
+          file_extension="${file##*.}"
+
+          if [[ $file_extension == "csv" && "${file_path}" != *"out/"* ]]; then
+              echo $'\n'
+              echo "Handling deletions for file ${file}"
+              config_file="${file_path}.${file_extension}.json"
+              out_folder="out/${file_path}/"
+              
+              if [[ -f $config_file ]]; then
+                git rm $config_file
+                git commit -m "Deleted out folder for file ${file} - $(date +'%d-%m-%Y at %H:%M:%S')"
+              fi
+
+              if [[ -d $out_folder ]]; then
+                git rm -r $out_folder
+                git commit -m "Deleted out folder for file ${file} - $(date +'%d-%m-%Y at %H:%M:%S')"
+              fi
+              
+              git push
+              
+              echo "Finished handling deletions for file ${file}"
+              echo "::set-output name=has_outputs::${{ toJSON(true) }}"
+          fi
+        done
       shell: bash
 
     - name: Commit generated CSV-Ws and logs to the repository
-      #if: $steps.build-and-inspect-inputs.outputs.has_outputs == true
+      if: ${{ fromJSON(steps.build-and-inspect-inputs.outputs.has_outputs) == true }}
       run: |
         echo $'\nCommitting CSV-Ws\n'
         git add out/
@@ -145,19 +172,21 @@ runs:
       shell: bash
 
     - name: Publish CSV-Ws and logs to artefacts
-      #if: $steps.build-and-inspect-inputs.outputs.has_outputs == true
+      if: ${{ fromJSON(steps.build-and-inspect-inputs.outputs.has_outputs) == true }}
       uses: actions/upload-artifact@v2
       with:
         name: assets-for-download
         path: out
 
     - name: Publish CSV-Ws and logs to GitHub Pages
-      #if: $steps.build-and-inspect-inputs.outputs.has_outputs == true
+      if: ${{ fromJSON(steps.build-and-inspect-inputs.outputs.has_outputs) == true }}
       run: |
+        echo $'\n'
         echo "Publishing to GitHub Pages"
         git checkout -b gh-pages
         rm -r LICENSE
         rm -r README.md
+        rm -r .github/workflows
 
         repo_name=${GITHUB_REPOSITORY#*/}    
         username=${GITHUB_REPOSITORY_OWNER}
@@ -165,7 +194,33 @@ runs:
         mapfile -d ',' -t out_files < <(printf '%s,' $(find . -type f -path '*out/*'))
         processed_out_files=$(printf ",%s" "${out_files[@]}")
 
-        bash scripts/generate_git_pages_html.sh $repo_name $username $commit_id $processed_out_files
+        touch .nojekyll
+        touch index.html
+
+        cat > index.html <<EOL
+        <!doctype html>
+        <html>
+          <head>
+          </head>
+          <body>
+            <h3>CSV-Ws generated are as below. The latest commit id is ${commit_id}.</h3>
+            <div id="files-container"></div>
+            <script type="text/javascript">
+              var html_str = "<ul>";
+              var files = "${processed_out_files}".split(',');
+              files.shift()
+              files.sort()
+              files.forEach(function(file) {
+                file = file.replace("./","")
+                link = "https://${username}.github.io/${repo_name}/"+file
+                html_str += "<li>"+"<a href='"+ link + "'>"+file+"</a></li>";
+              });
+              html_str += "</ul>";
+              document.getElementById("files-container").innerHTML = html_str;
+            </script>
+          </body>
+        </html>
+        EOL
 
         git add .nojekyll
         git add index.html
