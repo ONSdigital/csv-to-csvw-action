@@ -1,9 +1,11 @@
 name: CSV-to-CSVW Action
 description: Generate CSV-W from csv upload to repository.
+
 on:
   push:
     branches:
       - main
+
 jobs:
   generate_csvw_from_csv_upload:
     name: Generate CSV-W from csv upload
