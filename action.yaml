@@ -52,7 +52,7 @@ runs:
       id: build-and-inspect-inputs
       run: |
         echo "::set-output name=has_outputs::false"
-        added_modified_files=$steps.get-added-changed-removed-files.outputs.added_modified
+        added_modified_files=${{steps.get-added-changed-removed-files.outputs.added_modified}}
         echo "added_modified_files: ${added_modified_files[@]}"
 
         for file in "${added_modified_files[@]}"; do
