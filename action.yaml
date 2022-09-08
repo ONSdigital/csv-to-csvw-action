@@ -1,11 +1,13 @@
-name: CSV-to-CSVW Action
+name: csv-to-csvw action
 description: Generate CSV-W from csv upload to repository.
-
+author: Connected Open Government Statistics (COGS)
+branding:
+  icon: box
+  color: white
 on:
   push:
     branches:
       - main
-
 jobs:
   generate_csvw_from_csv_upload:
     name: Generate CSV-W from csv upload
