@@ -103,6 +103,11 @@ jobs:
                     potential_config_file="${file_secondary_path}/${file_secondary_name}.${file_secondary_extension}"
                   fi
 
+                  echo "file_secondary_path: ${file_secondary_path}"
+                  echo "file_secondary_name: ${file_secondary_name}"
+                  echo "file_secondary_extension: ${file_secondary_extension}"
+                  echo "potential_config_file: ${potential_config_file}"
+
                   if [[ $potential_config_file == "${file##*.}.json" ]]; then
                     config_file="${file_secondary_name}.json"
                   fi
