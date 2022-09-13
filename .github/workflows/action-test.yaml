@@ -88,9 +88,22 @@ jobs:
               if [[ $file_extension == "csv" ]]; then
                 csv_file=${file}
                 for file_secondary in "${added_modified_files[@]}"; do
-                  file_secondary_name="${file_secondary%.*}"
+                  file_secondary_path="${file_secondary%.*}"
+                  file_secondary_name="${file_secondary_path##*/}"
                   file_secondary_extension="${file_secondary##*.}"
-                  if [[ "${file_secondary_name}.${file_secondary_extension}" == "${file_path}.json" ]]; then
+                  
+                  if [[ $file_secondary_path == $file_secondary_name ]]; then
+                    file_secondary_path=""
+                  fi
+
+                  potential_config_file=""
+                  if [[ $file_secondary_path == "" ]]; then
+                    potential_config_file="${file_secondary_name}.${file_secondary_extension}"
+                  else
+                    potential_config_file="${file_secondary_path}/${file_secondary_name}.${file_secondary_extension}"
+                  fi
+
+                  if [[ $potential_config_file == "${file##*.}.json" ]]; then
                     config_file="${file_secondary_name}.json"
                   fi
                 done
