@@ -249,7 +249,6 @@ runs:
         path: out
 
     - name: Commit generated CSV-Ws and logs to the repository
-      #if: ${{ fromJSON(steps.build-and-inspect-files.outputs.has_outputs) == true }}
       if: ${{ (fromJSON(steps.build-and-inspect-inputs.outputs.has_outputs) == true) && (fromJSON(inputs.commit-outputs) == true) }}
       run: |
         echo "--Commiting Outputs to Main Branch"
@@ -261,7 +260,6 @@ runs:
       shell: bash
 
     - name: Publish CSV-Ws and logs to GitHub Pages
-      #if: ${{ fromJSON(steps.build-and-inspect-files.outputs.has_outputs) == true }}
       if: ${{ (fromJSON(steps.build-and-inspect-inputs.outputs.has_outputs) == true) && (fromJSON(inputs.publish-to-gh-pages) == true) }}
       run: |
         echo "--Publishing Output to GitHub Pages"
