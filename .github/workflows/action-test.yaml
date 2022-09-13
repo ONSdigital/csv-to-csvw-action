@@ -39,7 +39,7 @@ jobs:
           git pull
         shell: bash
 
-      - name: Get all added/changed/removed files
+      - name: Get added/modified/removed files
         id: get-added-changed-removed-files
         uses: jitterbit/get-changed-files@v1
         with:
@@ -49,7 +49,7 @@ jobs:
         id: build-and-inspect-files
         run: |
           echo "::set-output name=has_outputs::${{ toJSON(false) }}"
-          
+
           mapfile -d ',' -t detected_files < <(printf '%s,' '${{ steps.get-added-changed-removed-files.outputs.added_modified }}')
           mapfile -d ',' -t renamed_files < <(printf '%s,' '${{ steps.get-added-changed-removed-files.outputs.renamed }}')
           detected_files+=(${renamed_files[@]})
@@ -144,7 +144,6 @@ jobs:
                 for inspect_file in "${inspectable_files[@]}"; do
                   echo "Inspecting file: ${inspect_file}"
                   inspect_file_path="${inspect_file%/*}"
-                  inspect_file_without_extension="${inspect_file%.*}"
                   inspect_file_name="${inspect_file##*/}"                  
                   inspect_output_file="${out_path}${inspect_file_name}_inspect_output.txt"
 
@@ -165,36 +164,66 @@ jobs:
           done
         shell: bash
 
-      - name: Process all deleted files
+      - name: Process deleted files
         id: process-deleted-files
         run: |
           echo "::set-output name=has_outputs::${{ toJSON(false) }}"
           mapfile -d ',' -t deleted_files < <(printf '%s,' '${{ steps.get-added-changed-removed-files.outputs.removed }}')
           for file in "${deleted_files[@]}"; do
-            file_path="${file%.*}"
-            file_name="${file_path##*/}"
+            echo "---Handling Deletions for File: ${file}"            
+            root_file=false
+            file_path="${file%/*}"
+            if [[ $file_path == $file ]]; then
+              file_path=""
+              root_file=true
+            fi
+            file_without_extension="${file%.*}"
+            file_name="${file##*/}"
             file_extension="${file##*.}"
 
-            if [[ $file_extension == "csv" && "${file_path}" != *"out/"* ]]; then
-                echo "---------------"
-                echo "Handling deletions for file ${file}"
-                config_file="${file_path}.${file_extension}.json"
-                out_folder="out/${file_path}/"
+            # Detecting the top folder from the file path. E.g. csv/ is the top folder when the path is csv/sub-folder/my-data.csv
+            if [[ $root_file == true ]]; then
+              top_folder=""
+            else
+              top_folder=$(echo "$file_path" | cut -d "/" -f1)
+            fi
+
+            echo "---Extracting Delete File Info"
+            echo "file_path: ${file_path}"
+            echo "file_without_extension: ${file_without_extension}"
+            echo "file_name: ${file_name}"
+            echo "file_extension: ${file_extension}"
+            echo "top_folder: ${top_folder}"
+
+            # Delete config and outputs when a csv outside the out folder is deleted.
+            if [[ $file_extension == "csv" && $top_folder != "out" ]]; then
+                config_file="${file_without_extension}.json"
+
+                if [[ $root_file == true ]]; then
+                  out_folder="out/${file_name}/"
+                else
+                  out_folder="out/${file_path}/${file_name}/"
+                fi
+                
+                echo "config_file: ${config_file}"
+                echo "out_folder: ${out_folder}"
                 
                 if [[ -f $config_file ]]; then
+                  echo "config file exists, hence deleting."
                   git rm $config_file
-                  git commit -m "Deleted out folder for file ${file} - $(date +'%d-%m-%Y at %H:%M:%S')"
+                  git commit -m "Deleted config file for file ${file} - $(date +'%d-%m-%Y at %H:%M:%S')"
                 fi
 
                 if [[ -d $out_folder ]]; then
+                  echo "outputs exist, hence deleting."
                   git rm -r $out_folder
-                  git commit -m "Deleted out folder for file ${file} - $(date +'%d-%m-%Y at %H:%M:%S')"
+                  git commit -m "Deleted outputs for file ${file} - $(date +'%d-%m-%Y at %H:%M:%S')"
                 fi
                 
                 git push
                 
-                echo "Finished handling deletions for file ${file}"
                 echo "::set-output name=has_outputs::${{ toJSON(true) }}"
+                echo "---Finished Handling Deletions for File: ${file}"
             fi
           done
         shell: bash
@@ -209,17 +238,16 @@ jobs:
       - name: Commit generated CSV-Ws and logs to the repository
         if: ${{ fromJSON(steps.build-and-inspect-files.outputs.has_outputs) == true }}
         run: |
-          echo $'\nCommitting CSV-Ws\n'
+          echo "---Committing Outputs"
           git add out/
-          git commit -m "CSV-Ws generated from csv upload - $(date +'%d-%m-%Y at %H:%M:%S')"
+          git commit -m "Outputs generated from csv upload - $(date +'%d-%m-%Y at %H:%M:%S')"
           git push
         shell: bash
 
       - name: Publish CSV-Ws and logs to GitHub Pages
         if: ${{ fromJSON(steps.build-and-inspect-files.outputs.has_outputs) == true }}
         run: |
-          echo "---------------"
-          echo "Publishing to GitHub Pages"
+          echo "---Publishing to GitHub Pages"
           git checkout -b gh-pages
           rm -r LICENSE
           rm -r README.md
