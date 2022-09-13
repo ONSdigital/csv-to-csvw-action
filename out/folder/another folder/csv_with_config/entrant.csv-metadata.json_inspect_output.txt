@@ -1,0 +1,110 @@
+
+- This file is a code list.
+
+- The code list has the following catalog metadata:
+        - Title: Entrant
+        - Label: Entrant
+        - Issued: 2022-09-13T23:53:44.523945
+        - Modified: 2022-09-13T23:53:44.523945
+        - License: None
+        - Creator: None
+        - Publisher: None
+        - Landing Pages: None
+        - Themes: None
+        - Keywords: None
+        - Contact Point: None
+        - Identifier: Entrant
+        - Comment: None
+        - Description: None
+        
+
+- The code list has the following dataset information:
+        - Number of Concepts: 55
+        - Number of Duplicates: 0
+        - First 10 Concepts: 
+   Uri Identifier             Label          Notation  Parent Uri Identifier  Sort Priority  Description
+             abba              ABBA              abba                    NaN              0          NaN
+        afro-dite         Afro-dite         afro-dite                    NaN              1          NaN
+       alice-babs        Alice Babs        alice-babs                    NaN              2          NaN
+  anna-bergendahl   Anna Bergendahl   anna-bergendahl                    NaN              3          NaN
+       arvingarna        Arvingarna        arvingarna                    NaN              4          NaN
+benjamin-ingrosso Benjamin Ingrosso benjamin-ingrosso                    NaN              5          NaN
+      bjorn-skifs       Björn Skifs       bjorn-skifs                    NaN              6          NaN
+            blond             Blond             blond                    NaN              7          NaN
+       brita-borg        Brita Borg        brita-borg                    NaN              8          NaN
+           carola            Carola            carola                    NaN              9          NaN
+        - Last 10 Concepts: 
+        Uri Identifier                  Label               Notation  Parent Uri Identifier  Sort Priority  Description
+         sanna-nielsen          Sanna Nielsen          sanna-nielsen                    NaN             45          NaN
+         siw-malmkvist          Siw Malmkvist          siw-malmkvist                    NaN             46          NaN
+         ted-gardestad          Ted Gärdestad          ted-gardestad                    NaN             47          NaN
+               the-ark                The Ark                the-ark                    NaN             48          NaN
+the-nova-and-the-dolls The Nova and the Dolls the-nova-and-the-dolls                    NaN             49          NaN
+           tomas-ledin            Tomas Ledin            tomas-ledin                    NaN             50          NaN
+         tommy-korberg          Tommy Körberg          tommy-korberg                    NaN             51          NaN
+         tommy-nilsson          Tommy Nilsson          tommy-nilsson                    NaN             52          NaN
+                 tusse                  Tusse                  tusse                    NaN             53          NaN
+     osten-warnerbring      Östen Warnerbring      osten-warnerbring                    NaN             54          NaN
+        
+
+- The code list has the following concepts information:
+        - Concepts hierarchy depth: 1
+        - Concepts hierarchy:
+root
+├── ABBA
+├── Afro-dite
+├── Alice Babs
+├── Anna Bergendahl
+├── Arvingarna
+├── Benjamin Ingrosso
+├── Björn Skifs
+├── Blond
+├── Brita Borg
+├── Carola
+├── Charlotte Nilsson
+├── Charlotte Perrelli
+├── Chips
+├── Christer Björkman
+├── Claes-Göran Hederström
+├── Edin-Ådahl
+├── Eric Saade
+├── Fame
+├── Family Four
+├── Forbes
+├── Frans
+├── Friends
+├── Herreys
+├── Inger Berggren
+├── Ingvar Wixell
+├── Jan Johansen
+├── Jill Johnson
+├── John Lundvik
+├── Kikki Danielsson
+├── Lars Berghagen and the Dolls
+├── Lena Philipsson
+├── Lill Lindfors and Svante Thuresson
+├── Lill-Babs
+├── Loreen
+├── Lotta Engberg
+├── Malena Ernman
+├── Marie Bergman and Roger Pontare
+├── Martin Stenmarck
+├── Monica Törnell and Lasse Holm
+├── Monica Zetterlund
+├── Måns Zelmerlöw
+├── One More Time
+├── Robin Bengtsson
+├── Robin Stjernberg
+├── Roger Pontare
+├── Sanna Nielsen
+├── Siw Malmkvist
+├── Ted Gärdestad
+├── The Ark
+├── The Nova and the Dolls
+├── Tomas Ledin
+├── Tommy Körberg
+├── Tommy Nilsson
+├── Tusse
+└── Östen Warnerbring
+
+        
