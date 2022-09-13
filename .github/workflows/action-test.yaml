@@ -119,10 +119,8 @@ jobs:
                 else
                   out_path="out/${file_path}/${file_name}/"
                 fi
-                echo $'\n'
                 echo "out_path: ${out_path}"
 
-                echo $'\n'
                 echo "Building CSV-W"
                 if [[ -f $config_file ]]; then
                   echo "Config for ${csv_file} is available: ${config_file}"
