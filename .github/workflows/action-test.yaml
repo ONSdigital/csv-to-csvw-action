@@ -104,7 +104,6 @@ jobs:
                 fi
               fi
               
-              echo $'\n'
               echo "csv_file for processing: ${csv_file}"
               echo "config_file for processing: ${config_file}"
               echo "added_modified_files: ${added_modified_files}"
@@ -116,6 +115,7 @@ jobs:
                 else
                   out_path="out/${file_path}/${file_name}/"
                 fi
+                echo $'\n'
                 echo "out_path: ${out_path}"
 
                 echo $'\n'
