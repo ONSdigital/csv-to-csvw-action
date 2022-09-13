@@ -198,7 +198,7 @@ jobs:
 
             # Delete config and outputs when a csv outside the out folder is deleted.
             if [[ $file_extension != "csv" || $top_folder == "out" ]]; then
-              echo "File is not a csv or a file inside out folder. Hence, ignoring."
+              echo "File is not a csv or a it is a file inside out folder. Hence, ignoring."
               continue
             fi
             
