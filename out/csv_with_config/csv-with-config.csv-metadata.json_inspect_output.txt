@@ -12,8 +12,8 @@
         - Landing Pages: None
         - Themes: None
         - Keywords: 
-		-- Sweden
 		-- European Broadcasting Union
+		-- Sweden
 		-- Eurovision
 		-- Song Contest
         - Contact Point: None
