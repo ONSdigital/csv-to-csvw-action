@@ -81,47 +81,20 @@ jobs:
               echo $'\n'
               echo "Processing file: ${file}"
 
-              if [[ $root_file ]]; then
-                out_path="out/${file_name}/"
-              else
-                out_path="out/${file_path}/${file_name}/"
-              fi
-              echo "out_path: ${out_path}"
-
               csv_file=""
               config_file=""
               if [[ $file_extension == "csv" ]]; then
                 csv_file=${file}
                 for file_secondary in "${added_modified_files[@]}"; do
-                  file_secondary_path="${file_secondary%.*}"
-                  file_secondary_name="${file_secondary_path##*/}"
-                  file_secondary_extension="${file_secondary##*.}"
-                  
-                  if [[ $file_secondary_path == $file_secondary_name ]]; then
-                    file_secondary_path=""
-                  fi
-
-                  potential_config_file=""
-                  if [[ $file_secondary_path == "" ]]; then
-                    potential_config_file="${file_secondary_name}.${file_secondary_extension}"
-                  else
-                    potential_config_file="${file_secondary_path}/${file_secondary_name}.${file_secondary_extension}"
-                  fi
-
-                  echo "file_secondary_path: ${file_secondary_path}"
-                  echo "file_secondary_name: ${file_secondary_name}"
-                  echo "file_secondary_extension: ${file_secondary_extension}"
-                  echo "potential_config_file: ${potential_config_file}"
-
-                  if [[ $potential_config_file == "${file_without_extension}.json" ]]; then
-                    config_file="${file_secondary_name}.json"
+                  potential_config_file="${file_without_extension}.json"
+                  if [[ -f $potential_config_file ]]; then
+                    config_file=$potential_config_file
                   fi
                 done
               elif [[ $file_extension == "json" ]]; then
                 config_file=$file
                 potential_csv_file="${file_path}/${file_name}.csv"
                 echo "potential_csv_file: ${potential_csv_file}"
-
                 if [[ -f $potential_csv_file ]]; then
                   csv_file=$potential_csv_file
                 else
@@ -129,13 +102,23 @@ jobs:
                 fi
               fi
               
+              echo $'\n'
               echo "csv_file for processing: ${csv_file}"
               echo "config_file for processing: ${config_file}"
 
               if [[ -f $csv_file ]]; then
+                # Creating the out path to store outputs.
+                if [[ $root_file ]]; then
+                  out_path="out/${file_name}/"
+                else
+                  out_path="out/${file_path}/${file_name}/"
+                fi
+                echo "out_path: ${out_path}"
+
+                echo $'\n'
+                echo "Building CSV-W"
                 if [[ -f $config_file ]]; then
                   echo "Config for ${csv_file} is available: ${config_file}"
-                  echo "Building CSV-W"
                   csvcubed build $csv_file -c $config_file --out $out_path --validation-errors-to-file
                 else
                   echo "Config for ${csv_file} is not available"
@@ -143,18 +126,18 @@ jobs:
                   csvcubed build $csv_file --out $out_path --validation-errors-to-file
                 fi
                 
+                echo $'\n'
                 echo "Inspecting CSV-W"
                 mapfile -d $'\0' inspectable_files < <(find "${GITHUB_WORKSPACE}/${out_path}" -name "*.csv-metadata.json" -type f -print0)
-                
                 for file in "${inspectable_files[@]}"; do
                   echo "Inspecting file ${file}"
                   file_path="${file%.*}"
                   file_name="${file_path##*/}"
                   inspect_output_file="${out_path}${file_name}_inspect_output.txt"
-
                   csvcubed inspect $file > $inspect_output_file
                 done
                 
+                echo $'\n'
                 echo "Finished processing file ${file}"
                 echo "::set-output name=has_outputs::${{ toJSON(true) }}"
               fi
