@@ -75,9 +75,13 @@ jobs:
             if [[ ($file_extension == "csv" || $file_extension == "json") && $top_folder != "out" ]]; then
               echo $'\n'
               echo "Processing file ${file}"
-            
-              out_path="out/${file_path}/${file_name}/"
-              echo "Output path is ${out_path}"
+
+              if [[ $file_path == "" ]]; then
+                out_path="out/${file_name}/"
+              else
+                out_path="out/${file_path}/${file_name}/"
+              fi
+              echo "out_path: ${out_path}"
 
               csv_file=""
               config_file=""
