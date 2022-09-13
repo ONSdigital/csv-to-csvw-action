@@ -167,7 +167,7 @@ jobs:
           path: out
 
       - name: Commit generated CSV-Ws and logs to the repository
-        if: ${{ (fromJSON(steps.build-and-inspect-inputs.outputs.has_outputs) == true) && (fromJSON(inputs.commit-outputs) == true) }}
+        if: ${{ (fromJSON(steps.build-and-inspect-inputs.outputs.has_outputs) == true) }}
         run: |
           echo "commit-outputs: ${{ inputs.commit-outputs }}"
           echo "commit-outputs: ${{ fromJSON(inputs.commit-outputs) }}"
@@ -179,7 +179,7 @@ jobs:
         shell: bash
 
       - name: Publish CSV-Ws and logs to GitHub Pages
-        if: ${{ (fromJSON(steps.build-and-inspect-inputs.outputs.has_outputs) == true) && (fromJSON(inputs.publish-to-gh-pages) == true) }}
+        if: ${{ (fromJSON(steps.build-and-inspect-inputs.outputs.has_outputs) == true) }}
         run: |
           echo "publish-to-gh-pages: ${{ inputs.publish-to-gh-pages }}"
           echo "publish-to-gh-pages: ${{ fromJSON(inputs.publish-to-gh-pages) }}"
