@@ -102,7 +102,7 @@ jobs:
                 done
               elif [[ $file_extension == "json" ]]; then
                 config_file=$file
-                potential_csv_file="${file_path}/${file_name}.csv"
+                potential_csv_file="${file_without_extension}.csv"
                 echo "potential_csv_file: ${potential_csv_file}"
                 if [[ -f $potential_csv_file ]]; then
                   csv_file=$potential_csv_file
