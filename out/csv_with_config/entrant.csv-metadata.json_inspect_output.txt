@@ -4,8 +4,8 @@
 - The code list has the following catalog metadata:
         - Title: Entrant
         - Label: Entrant
-        - Issued: 2022-09-13T21:41:14.588235
-        - Modified: 2022-09-13T21:41:14.588235
+        - Issued: 2022-09-13T21:42:32.759042
+        - Modified: 2022-09-13T21:42:32.759042
         - License: None
         - Creator: None
         - Publisher: None
