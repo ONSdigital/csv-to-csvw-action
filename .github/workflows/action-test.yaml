@@ -52,7 +52,7 @@ jobs:
           
           mapfile -d ',' -t detected_files < <(printf '%s,' '${{ steps.get-added-changed-removed-files.outputs.added_modified }}')
           mapfile -d ',' -t renamed_files < <(printf '%s,' '${{ steps.get-added-changed-removed-files.outputs.renamed }}')
-          detected_file+=(${renamed_files[@]})
+          detected_files+=(${renamed_files[@]})
           echo "detected_files: ${detected_files[@]}"
 
           processed_files=()
