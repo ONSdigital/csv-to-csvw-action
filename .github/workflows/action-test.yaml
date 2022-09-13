@@ -79,7 +79,7 @@ jobs:
             file_extension="${file##*.}"
             
             # Detecting the top folder from the file path. E.g. csv/ is the top folder when the path is csv/sub-folder/my-data.csv
-            if [[ $root_file ]]; then
+            if [[ $root_file == true ]]; then
               top_folder=""
             else
               top_folder=$(echo "$file_path" | cut -d "/" -f1)
