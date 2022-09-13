@@ -145,7 +145,7 @@ jobs:
                   inspect_file_name="${inspect_file##*/}"                  
                   inspect_output_file="${out_path}${inspect_file_name}_inspect_output.txt"
 
-                  csvcubed inspect $file > $inspect_output_file
+                  csvcubed inspect $inspect_file > $inspect_output_file
                 done
                 
                 processed_files+=($csv_file)
