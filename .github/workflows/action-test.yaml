@@ -67,6 +67,7 @@ jobs:
               continue
             fi
 
+            root_file=false  
             file_path="${file%/*}"
             # When the file is at the root, the above returns file name. We need to make sure the file_path is set to '' when this is the case.
             if [[ $file_path == $file ]]; then
