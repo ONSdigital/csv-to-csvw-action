@@ -54,6 +54,8 @@ jobs:
           processed_files=()
           for file in "${added_modified_files[@]}"; do
             echo "Detected file: ${file}"
+            echo "======================"
+            
             # If the file is already processed, it will be ignored.
             if [[ " ${processed_files[@]} " =~ " ${file} " ]]; then
               echo "File is already processed, hence ignoring it."
@@ -144,14 +146,17 @@ jobs:
                   csvcubed inspect $file > $inspect_output_file
                 done
                 
-                echo $'\n'
                 processed_files+=($csv_file)
                 processed_files+=($config_file)
+                echo $'\n'
                 echo "processed_files: ${processed_files}"
+                
+                echo "::set-output name=has_outputs::${{ toJSON(true) }}"
                 
                 echo $'\n'        
                 echo "Finished processing file ${file}"
-                echo "::set-output name=has_outputs::${{ toJSON(true) }}"
+                echo "======================"
+                
               fi
             fi
           done
