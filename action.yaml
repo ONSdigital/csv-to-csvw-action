@@ -173,7 +173,7 @@ runs:
         done
       shell: bash
 
-    - name: Process deleted files
+    - name: Handle deleted files
       id: process-deleted-files
       run: |
         echo "::set-output name=has_outputs::${{ toJSON(false) }}"
