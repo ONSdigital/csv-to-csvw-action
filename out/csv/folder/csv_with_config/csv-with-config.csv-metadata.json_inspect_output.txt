@@ -4,8 +4,8 @@
 - The data cube has the following catalog metadata:
         - Title: Csv With Config
         - Label: Csv With Config
-        - Issued: 2022-09-13T22:47:13.709753
-        - Modified: 2022-09-13T22:47:13.709753
+        - Issued: 2022-09-13T22:52:26.850279
+        - Modified: 2022-09-13T22:52:26.850279
         - License: None
         - Creator: None
         - Publisher: None
@@ -45,7 +45,7 @@ language.csv#code-list        Language        Language
     year.csv#code-list            Year            Year
 
 - The data cube has the following dataset information:
-        - Number of Observations: 179
+        - Number of Observations: 178
         - Number of Duplicates: 0
         - First 10 Observations: 
  Year       Entrant                  Song Language  Value         Measure     Unit
@@ -61,6 +61,7 @@ language.csv#code-list        Language        Language
  1961     lill-babs           april-april  swedish   14.0      final-rank unitless
         - Last 10 Observations: 
  Year           Entrant              Song Language  Value         Measure     Unit
+ 2017   robin-bengtsson     i-can-t-go-on  english    6.0 people-on-stage   number
  2018 benjamin-ingrosso     dance-you-off  english    7.0      final-rank unitless
  2018 benjamin-ingrosso     dance-you-off  english  274.0    final-points unitless
  2018 benjamin-ingrosso     dance-you-off  english    6.0 people-on-stage   number
@@ -70,7 +71,6 @@ language.csv#code-list        Language        Language
  2021             tusse            voices  english   14.0      final-rank unitless
  2021             tusse            voices  english  109.0    final-points unitless
  2021             tusse            voices  english    6.0 people-on-stage   number
- 2022            tusseb           voicesb englishb    6.0 people-on-stage   number
         
 
 - The data cube has the following value counts:
@@ -78,5 +78,5 @@ language.csv#code-list        Language        Language
         Measure     Unit  Count
    final-points unitless     59
      final-rank unitless     59
-people-on-stage   number     61
+people-on-stage   number     60
         
