@@ -51,8 +51,15 @@ jobs:
           echo "::set-output name=has_outputs::${{ toJSON(false) }}"
           mapfile -d ',' -t added_modified_files < <(printf '%s,' '${{ steps.get-added-changed-removed-files.outputs.added_modified }}')
 
+          processed_files=()
           for file in "${added_modified_files[@]}"; do
             echo "Detected file: ${file}"
+            # If the file is already processed, it will be ignored.
+            if [[ " ${processed_files[@]} " =~ " ${file} " ]]; then
+              echo "File is already processed, hence ignoring it."
+              break
+            fi
+
             file_path="${file%/*}"
             # When the file is at the root, the above returns file name. We need to make sure the file_path is set to '' when this is the case.
             if [[ $file_path == $file ]]; then
@@ -89,8 +96,6 @@ jobs:
                   potential_config_file="${file_without_extension}.json"
                   if [[ -f $potential_config_file ]]; then
                     config_file=$potential_config_file
-                    # Deleting config file from the list of files to be processed as it is already processed.
-                    added_modified_files=${added_modified_files[@]/$config_file}
                   fi
                 done
               elif [[ $file_extension == "json" ]]; then
@@ -106,7 +111,6 @@ jobs:
               
               echo "csv_file for processing: ${csv_file}"
               echo "config_file for processing: ${config_file}"
-              echo "added_modified_files: ${added_modified_files}"
 
               if [[ -f $csv_file ]]; then
                 # Creating the out path to store outputs.
@@ -141,6 +145,11 @@ jobs:
                 done
                 
                 echo $'\n'
+                processed_files+=($csv_file)
+                processed_files+=($config_file)
+                echo "processed_files: ${processed_files}"
+                
+                echo $'\n'        
                 echo "Finished processing file ${file}"
                 echo "::set-output name=has_outputs::${{ toJSON(true) }}"
               fi
