@@ -53,19 +53,19 @@ jobs:
 
           for file in "${added_modified_files[@]}"; do
             echo "${file}"
-            file_path="${file%.*}"
-            file_without_extension="${file##*.}"
-            file_name="${file_path##*/}"
+            file_path="${file%/*}"
+            file_without_extension="${file%.*}"
+            file_name="${file_without_extension##*/}"
             file_extension="${file##*.}"
             
             # Detects the top folder from the file path. E.g. csv/ is the top folder when the path is csv/sub-folder/my-data.csv
             top_folder=$(echo "$file_path" | cut -d "/" -f1)
 
-            # The below will be the case if the files are commited to the root of the project.
-            if [[ $file_path == $file_name ]]; then
-              file_path=""
-              top_folder=""
-            fi
+            # # The below will be the case if the files are commited to the root of the project.
+            # if [[ $file_path == $file_name ]]; then
+            #   file_path=""
+            #   top_folder=""
+            # fi
 
             echo "file_path: ${file_path}"
             echo "file_without_extension: ${file_without_extension}"
