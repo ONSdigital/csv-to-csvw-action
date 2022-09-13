@@ -12,9 +12,9 @@
         - Landing Pages: None
         - Themes: None
         - Keywords: 
-		-- Song Contest
 		-- Sweden
 		-- Eurovision
+		-- Song Contest
 		-- European Broadcasting Union
         - Contact Point: None
         - Identifier: csv with config
