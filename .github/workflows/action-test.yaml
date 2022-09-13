@@ -52,14 +52,15 @@ jobs:
           mapfile -d ',' -t added_modified_files < <(printf '%s,' '${{ steps.get-added-changed-removed-files.outputs.added_modified }}')
 
           for file in "${added_modified_files[@]}"; do
-            echo "${file}" #csv/myfile.csv
-            file_path="${file%/*}" #csv/
+            echo "${file}"
+            file_path="${file%/*}"
+            # When the file is at the root, the above returns file name. We need to make sure the file_path is set to '' when this is the case.
             if [[ $file_path == $file ]]; then
               file_path=""
             fi
-            file_without_extension="${file%.*}" #csv/myfile
-            file_name="${file_without_extension##*/}" #myfile
-            file_extension="${file##*.}" #csv
+            file_without_extension="${file%.*}"
+            file_name="${file_without_extension##*/}"
+            file_extension="${file##*.}"
             
             # Detects the top folder from the file path. E.g. csv/ is the top folder when the path is csv/sub-folder/my-data.csv
             if [[ $file_path == "" ]]; then
