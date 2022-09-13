@@ -14,8 +14,8 @@
         - Keywords: 
 		-- European Broadcasting Union
 		-- Eurovision
-		-- Sweden
 		-- Song Contest
+		-- Sweden
         - Contact Point: None
         - Identifier: csv with config
         - Comment: List of Swedish entries to the Eurovision Song Contest since 1958.
