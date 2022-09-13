@@ -53,6 +53,7 @@ jobs:
 
           processed_files=()
           for file in "${added_modified_files[@]}"; do
+            echo $'\n'
             echo "Detected file: ${file}"
             echo "======================"
             
