@@ -157,8 +157,7 @@ jobs:
                 echo "::set-output name=has_outputs::${{ toJSON(true) }}"
                 
                 echo "---Finished Processing File: ${file}"
-                echo "======================"
-                
+                echo "======================"                
               fi
             fi
           done
@@ -179,7 +178,7 @@ jobs:
               root_file=true
             fi
             file_without_extension="${file%.*}"
-            file_name="${file##*/}"
+            file_name="${file_without_extension##*/}"
             file_extension="${file##*.}"
 
             # Detecting the top folder from the file path. E.g. csv/ is the top folder when the path is csv/sub-folder/my-data.csv
@@ -241,8 +240,11 @@ jobs:
 
       - name: Commit generated CSV-Ws and logs to the repository
         if: ${{ fromJSON(steps.build-and-inspect-files.outputs.has_outputs) == true }}
+        #if: ${{ (fromJSON(steps.build-and-inspect-inputs.outputs.has_outputs) == true) && (fromJSON(inputs.commit-outputs) == true) }}
         run: |
-          echo "---Committing Outputs"
+          echo "--Commiting Outputs to Main Branch"
+          #echo "commit-outputs: ${{ fromJSON(inputs.commit-outputs) }}"
+
           git add out/
           git commit -m "Outputs generated from csv upload - $(date +'%d-%m-%Y at %H:%M:%S')"
           git push
@@ -250,8 +252,11 @@ jobs:
 
       - name: Publish CSV-Ws and logs to GitHub Pages
         if: ${{ fromJSON(steps.build-and-inspect-files.outputs.has_outputs) == true }}
+        #if: ${{ (fromJSON(steps.build-and-inspect-inputs.outputs.has_outputs) == true) && (fromJSON(inputs.publish-to-gh-pages) == true) }}
         run: |
-          echo "---Publishing to GitHub Pages"
+          echo "--Publishing Output to GitHub Pages"
+          #echo "publish-to-gh-pages: ${{ fromJSON(inputs.publish-to-gh-pages) }}"
+          
           git checkout -b gh-pages
           rm -r LICENSE
           rm -r README.md
