@@ -46,7 +46,7 @@ jobs:
           format: "csv"
 
       - name: Build and inspect files
-        id: build-and-inspect-inputs
+        id: build-and-inspect-files
         run: |
           echo "::set-output name=has_outputs::${{ toJSON(false) }}"
           mapfile -d ',' -t added_modified_renamed_files < <(printf '%s,' '${{ steps.get-added-changed-removed-files.outputs.added_modified_renamed }}')
@@ -195,14 +195,14 @@ jobs:
         shell: bash
 
       - name: Publish CSV-Ws and logs to artefacts
-        if: ${{ fromJSON(steps.build-and-inspect-inputs.outputs.has_outputs) == true }}
+        if: ${{ fromJSON(steps.build-and-inspect-files.outputs.has_outputs) == true }}
         uses: actions/upload-artifact@v2
         with:
           name: assets-for-download
           path: out
 
       - name: Commit generated CSV-Ws and logs to the repository
-        if: ${{ fromJSON(steps.build-and-inspect-inputs.outputs.has_outputs) == true }}
+        if: ${{ fromJSON(steps.build-and-inspect-files.outputs.has_outputs) == true }}
         run: |
           echo $'\nCommitting CSV-Ws\n'
           git add out/
@@ -211,7 +211,7 @@ jobs:
         shell: bash
 
       - name: Publish CSV-Ws and logs to GitHub Pages
-        if: ${{ fromJSON(steps.build-and-inspect-inputs.outputs.has_outputs) == true }}
+        if: ${{ fromJSON(steps.build-and-inspect-files.outputs.has_outputs) == true }}
         run: |
           echo "---------------"
           echo "Publishing to GitHub Pages"
