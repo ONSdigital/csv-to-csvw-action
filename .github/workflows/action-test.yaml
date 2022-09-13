@@ -240,9 +240,9 @@ jobs:
 
       - name: Commit generated CSV-Ws and logs to the repository
         if: ${{ fromJSON(steps.build-and-inspect-files.outputs.has_outputs) == true }}
+        # if: ${{ (fromJSON(steps.build-and-inspect-inputs.outputs.has_outputs) == true) && (fromJSON(inputs.commit-outputs) == true) }}
         run: |
           echo "--Commiting Outputs to Main Branch"
-          #echo "commit-outputs: ${{ fromJSON(inputs.commit-outputs) }}"
 
           git add out/
           git commit -m "Outputs generated from csv upload - $(date +'%d-%m-%Y at %H:%M:%S')"
@@ -251,9 +251,9 @@ jobs:
 
       - name: Publish CSV-Ws and logs to GitHub Pages
         if: ${{ fromJSON(steps.build-and-inspect-files.outputs.has_outputs) == true }}
+        #if: ${{ (fromJSON(steps.build-and-inspect-inputs.outputs.has_outputs) == true) && (fromJSON(inputs.publish-to-gh-pages) == true) }}
         run: |
           echo "--Publishing Output to GitHub Pages"
-          #echo "publish-to-gh-pages: ${{ fromJSON(inputs.publish-to-gh-pages) }}"
           
           git checkout -b gh-pages
           rm -r LICENSE
