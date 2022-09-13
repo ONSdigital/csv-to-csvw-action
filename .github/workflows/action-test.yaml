@@ -1,12 +1,4 @@
 name: csv-to-csvw action
-inputs:
-  commit-outputs:
-    description: Boolean indicating whether the outputs should be committed to the out folder (default is true).
-    default: true
-  publish-to-gh-pages:
-    description: Boolean indicating whether the outputs should be published to GitHub Pages (default is true).
-    required: false
-    default: true
 
 on:
   push:
@@ -175,11 +167,8 @@ jobs:
           path: out
 
       - name: Commit generated CSV-Ws and logs to the repository
-        if: ${{ (fromJSON(steps.build-and-inspect-inputs.outputs.has_outputs) == true) && (fromJSON(inputs.commit-outputs) == true) }}
+        if: ${{ fromJSON(steps.build-and-inspect-inputs.outputs.has_outputs) == true }}
         run: |
-          echo "commit-outputs: ${{ inputs.commit-outputs }}"
-          echo "commit-outputs: ${{ fromJSON(inputs.commit-outputs) }}"
-          
           echo $'\nCommitting CSV-Ws\n'
           git add out/
           git commit -m "CSV-Ws generated from csv upload - $(date +'%d-%m-%Y at %H:%M:%S')"
@@ -187,11 +176,8 @@ jobs:
         shell: bash
 
       - name: Publish CSV-Ws and logs to GitHub Pages
-        if: ${{ (fromJSON(steps.build-and-inspect-inputs.outputs.has_outputs) == true) && (fromJSON(inputs.publish-to-gh-pages) == true) }}
+        if: ${{ fromJSON(steps.build-and-inspect-inputs.outputs.has_outputs) == true }}
         run: |
-          echo "publish-to-gh-pages: ${{ inputs.publish-to-gh-pages }}"
-          echo "publish-to-gh-pages: ${{ fromJSON(inputs.publish-to-gh-pages) }}"
-
           echo $'\n'
           echo "Publishing to GitHub Pages"
           git checkout -b gh-pages
@@ -238,4 +224,3 @@ jobs:
           git commit -a -m "Updating outputs in GitHub Pages - $(date +'%d-%m-%Y at %H:%M:%S')"
           git push --set-upstream origin gh-pages -f
         shell: bash
-
