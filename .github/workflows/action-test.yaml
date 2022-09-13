@@ -49,13 +49,14 @@ jobs:
         id: build-and-inspect-files
         run: |
           echo "::set-output name=has_outputs::${{ toJSON(false) }}"
-          mapfile -d ',' -t added_modified_files < <(printf '%s,' '${{ steps.get-added-changed-removed-files.outputs.added_modified }}')
+          
+          mapfile -d ',' -t detected_files < <(printf '%s,' '${{ steps.get-added-changed-removed-files.outputs.added_modified }}')
           mapfile -d ',' -t renamed_files < <(printf '%s,' '${{ steps.get-added-changed-removed-files.outputs.renamed }}')
-          added_modified_renamed_files=$added_modified_files+(${renamed_files[@]})
-          echo "added_modified_renamed_files: $added_modified_renamed_files"
+          detected_file+=(${renamed_files[@]})
+          echo "detected_files: $detected_files"
 
           processed_files=()
-          for file in "${added_modified_renamed_files[@]}"; do
+          for file in "${detected_files[@]}"; do
             echo $'\n'
             echo "Detected file: ${file}"
             echo "======================"
@@ -97,7 +98,7 @@ jobs:
               config_file=""
               if [[ $file_extension == "csv" ]]; then
                 csv_file=${file}
-                for file_secondary in "${added_modified_renamed_files[@]}"; do
+                for file_secondary in "${detected_files[@]}"; do
                   potential_config_file="${file_without_extension}.json"
                   if [[ -f $potential_config_file ]]; then
                     config_file=$potential_config_file
