@@ -109,7 +109,7 @@ jobs:
                   echo "file_secondary_name: ${file_secondary_name}"
                   echo "file_secondary_extension: ${file_secondary_extension}"
                   echo "potential_config_file: ${potential_config_file}"
-                  echo ""
+
                   if [[ $potential_config_file == "${file_without_extension}.json" ]]; then
                     config_file="${file_secondary_name}.json"
                   fi
