@@ -60,7 +60,7 @@ jobs:
             # If the file is already processed, it will be ignored.
             if [[ " ${processed_files[@]} " =~ " ${file} " ]]; then
               echo "File is already processed, hence ignoring it."
-              break
+              continue
             fi
 
             file_path="${file%/*}"
