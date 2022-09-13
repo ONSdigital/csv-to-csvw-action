@@ -140,9 +140,11 @@ jobs:
                 mapfile -d $'\0' inspectable_files < <(find "${GITHUB_WORKSPACE}/${out_path}" -name "*.csv-metadata.json" -type f -print0)
                 for inspect_file in "${inspectable_files[@]}"; do
                   echo "Inspecting file: ${inspect_file}"
-                  inspect_file_path="${inspect_file%.*}"
-                  inspect_file_name="${inspect_file_path##*/}"
+                  inspect_file_path="${inspect_file%/*}"
+                  inspect_file_without_extension="${inspect_file%.*}"
+                  inspect_file_name="${inspect_file##*/}"                  
                   inspect_output_file="${out_path}${inspect_file_name}_inspect_output.txt"
+                  
                   csvcubed inspect $file > $inspect_output_file
                 done
                 
