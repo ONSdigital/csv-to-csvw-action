@@ -12,10 +12,10 @@
         - Landing Pages: None
         - Themes: None
         - Keywords: 
-		-- Sweden
 		-- Eurovision
 		-- Song Contest
 		-- European Broadcasting Union
+		-- Sweden
         - Contact Point: None
         - Identifier: csv with config
         - Comment: List of Swedish entries to the Eurovision Song Contest since 1958.
