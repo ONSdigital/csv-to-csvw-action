@@ -167,11 +167,8 @@ jobs:
           path: out
 
       - name: Commit generated CSV-Ws and logs to the repository
-        if: ${{ (fromJSON(steps.build-and-inspect-inputs.outputs.has_outputs) == true) }}
+        if: ${{ fromJSON(steps.build-and-inspect-inputs.outputs.has_outputs) == true }}
         run: |
-          echo "commit-outputs: ${{ inputs.commit-outputs }}"
-          echo "commit-outputs: ${{ fromJSON(inputs.commit-outputs) }}"
-
           echo $'\nCommitting CSV-Ws\n'
           git add out/
           git commit -m "CSV-Ws generated from csv upload - $(date +'%d-%m-%Y at %H:%M:%S')"
@@ -179,11 +176,8 @@ jobs:
         shell: bash
 
       - name: Publish CSV-Ws and logs to GitHub Pages
-        if: ${{ (fromJSON(steps.build-and-inspect-inputs.outputs.has_outputs) == true) }}
+        if: ${{ fromJSON(steps.build-and-inspect-inputs.outputs.has_outputs) == true }}
         run: |
-          echo "publish-to-gh-pages: ${{ inputs.publish-to-gh-pages }}"
-          echo "publish-to-gh-pages: ${{ fromJSON(inputs.publish-to-gh-pages) }}"
-
           echo $'\n'
           echo "Publishing to GitHub Pages"
           git checkout -b gh-pages
