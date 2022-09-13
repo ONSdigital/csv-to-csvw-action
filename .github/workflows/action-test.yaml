@@ -54,6 +54,7 @@ jobs:
           for file in "${added_modified_files[@]}"; do
             echo "${file}"
             file_path="${file%.*}"
+            file_without_extension="${file##*.}""
             file_name="${file_path##*/}"
             file_extension="${file##*.}"
             
@@ -67,6 +68,7 @@ jobs:
             fi
 
             echo "file_path: ${file_path}"
+            echo "file_without_extension: ${file_without_extension}"
             echo "file_name: ${file_name}"
             echo "file_extension: ${file_extension}"
             echo "top_folder: ${top_folder}"
@@ -107,8 +109,8 @@ jobs:
                   echo "file_secondary_name: ${file_secondary_name}"
                   echo "file_secondary_extension: ${file_secondary_extension}"
                   echo "potential_config_file: ${potential_config_file}"
-
-                  if [[ $potential_config_file == "${file##*.}.json" ]]; then
+                  echo ""
+                  if [[ $potential_config_file == "${file_without_extension}.json" ]]; then
                     config_file="${file_secondary_name}.json"
                   fi
                 done
