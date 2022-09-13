@@ -49,10 +49,10 @@ jobs:
         id: build-and-inspect-inputs
         run: |
           echo "::set-output name=has_outputs::${{ toJSON(false) }}"
-          mapfile -d ',' -t added_modified_files < <(printf '%s,' '${{ steps.get-added-changed-removed-files.outputs.added_modified }}')
+          mapfile -d ',' -t added_modified_renamed_files < <(printf '%s,' '${{ steps.get-added-changed-removed-files.outputs.added_modified_renamed }}')
 
           processed_files=()
-          for file in "${added_modified_files[@]}"; do
+          for file in "${added_modified_renamed_files[@]}"; do
             echo $'\n'
             echo "Detected file: ${file}"
             echo "======================"
@@ -94,7 +94,7 @@ jobs:
               config_file=""
               if [[ $file_extension == "csv" ]]; then
                 csv_file=${file}
-                for file_secondary in "${added_modified_files[@]}"; do
+                for file_secondary in "${added_modified_renamed_files[@]}"; do
                   potential_config_file="${file_without_extension}.json"
                   if [[ -f $potential_config_file ]]; then
                     config_file=$potential_config_file
