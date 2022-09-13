@@ -95,16 +95,20 @@ jobs:
                   fi
                 done
               elif [[ $file_extension == "json" ]]; then
-                config_file=${file}
-                if [[ -f "${file_path}/${file_name}.csv" ]]; then
-                  csv_file="${file_path}/${file_name}.csv"
+                config_file=$file
+                potential_csv_file="${file_path}/${file_name}.csv"
+                echo "potential_csv_file: ${potential_csv_file}"
+
+                if [[ -f $potential_csv_file ]]; then
+                  csv_file=$potential_csv_file
                 else
                   config_file=NULL
                 fi
               fi
               
               echo "csv_file for processing: ${csv_file}"
-              
+              echo "config_file for processing: ${config_file}"
+
               if [[ -f $csv_file ]]; then
                 if [[ -f $config_file ]]; then
                   echo "Config for ${csv_file} is available: ${config_file}"
