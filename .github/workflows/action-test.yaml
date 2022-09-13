@@ -122,7 +122,7 @@ jobs:
               if [[ -f $csv_file ]]; then
                 echo "---Producing Output Path"
                 # Creating the out path to store outputs.
-                if [[ $root_file ]]; then
+                if [[ $root_file == true ]]; then
                   out_path="out/${file_name}/"
                 else
                   out_path="out/${file_path}/${file_name}/"
