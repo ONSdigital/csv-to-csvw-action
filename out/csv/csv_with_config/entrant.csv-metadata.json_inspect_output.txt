@@ -4,8 +4,8 @@
 - The code list has the following catalog metadata:
         - Title: Entrant
         - Label: Entrant
-        - Issued: 2022-09-13T22:10:28.232467
-        - Modified: 2022-09-13T22:10:28.232467
+        - Issued: 2022-09-13T22:14:34.630754
+        - Modified: 2022-09-13T22:14:34.630754
         - License: None
         - Creator: None
         - Publisher: None
@@ -19,7 +19,7 @@
         
 
 - The code list has the following dataset information:
-        - Number of Concepts: 56
+        - Number of Concepts: 55
         - Number of Duplicates: 0
         - First 10 Concepts: 
    Uri Identifier             Label          Notation  Parent Uri Identifier  Sort Priority  Description
@@ -35,6 +35,7 @@ benjamin-ingrosso Benjamin Ingrosso benjamin-ingrosso                    NaN    
            carola            Carola            carola                    NaN              9          NaN
         - Last 10 Concepts: 
         Uri Identifier                  Label               Notation  Parent Uri Identifier  Sort Priority  Description
+         sanna-nielsen          Sanna Nielsen          sanna-nielsen                    NaN             45          NaN
          siw-malmkvist          Siw Malmkvist          siw-malmkvist                    NaN             46          NaN
          ted-gardestad          Ted Gärdestad          ted-gardestad                    NaN             47          NaN
                the-ark                The Ark                the-ark                    NaN             48          NaN
@@ -43,8 +44,7 @@ the-nova-and-the-dolls The Nova and the Dolls the-nova-and-the-dolls            
          tommy-korberg          Tommy Körberg          tommy-korberg                    NaN             51          NaN
          tommy-nilsson          Tommy Nilsson          tommy-nilsson                    NaN             52          NaN
                  tusse                  Tusse                  tusse                    NaN             53          NaN
-                tussea                 Tussea                 tussea                    NaN             54          NaN
-     osten-warnerbring      Östen Warnerbring      osten-warnerbring                    NaN             55          NaN
+     osten-warnerbring      Östen Warnerbring      osten-warnerbring                    NaN             54          NaN
         
 
 - The code list has the following concepts information:
@@ -105,7 +105,6 @@ root
 ├── Tommy Körberg
 ├── Tommy Nilsson
 ├── Tusse
-├── Tussea
 └── Östen Warnerbring
 
         
