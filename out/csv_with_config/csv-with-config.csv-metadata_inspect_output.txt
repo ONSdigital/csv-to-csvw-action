@@ -4,8 +4,8 @@
 - The data cube has the following catalog metadata:
         - Title: Csv With Config
         - Label: Csv With Config
-        - Issued: 2022-09-13T19:57:43.542388
-        - Modified: 2022-09-13T19:57:43.542388
+        - Issued: 2022-09-13T20:05:12.547019
+        - Modified: 2022-09-13T20:05:12.547019
         - License: None
         - Creator: None
         - Publisher: None
