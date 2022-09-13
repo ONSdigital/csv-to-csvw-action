@@ -89,6 +89,8 @@ jobs:
                   potential_config_file="${file_without_extension}.json"
                   if [[ -f $potential_config_file ]]; then
                     config_file=$potential_config_file
+                    # Deleting config file from the list of files to be processed as it is already processed.
+                    added_modified_files=${added_modified_files[@]/$config_file}
                   fi
                 done
               elif [[ $file_extension == "json" ]]; then
@@ -105,6 +107,7 @@ jobs:
               echo $'\n'
               echo "csv_file for processing: ${csv_file}"
               echo "config_file for processing: ${config_file}"
+              echo "added_modified_files: ${added_modified_files}"
 
               if [[ -f $csv_file ]]; then
                 # Creating the out path to store outputs.
