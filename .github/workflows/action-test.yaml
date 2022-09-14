@@ -214,13 +214,13 @@ jobs:
             
             if [[ -f $config_file ]]; then
               echo "config file exists, hence deleting."
-              git rm $config_file
+              git rm "$config_file"
               git commit -m "Deleted config file for file ${file} - $(date +'%d-%m-%Y at %H:%M:%S')"
             fi
 
             if [[ -d $out_folder ]]; then
               echo "outputs exist, hence deleting."
-              git rm -r $out_folder
+              git rm -r "$out_folder"
               git commit -m "Deleted outputs for file ${file} - $(date +'%d-%m-%Y at %H:%M:%S')"
             fi
             
