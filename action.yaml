@@ -143,10 +143,10 @@ runs:
               echo "Building CSV-W"
               if [[ -f $config_file ]]; then
                 echo "Config for ${csv_file} is available: ${config_file}"
-                csvcubed build "${csv_file}" -c "${config_file}" --out "${out_path}" --validation-errors-to-file
+                csvcubed build "'${csv_file}'" -c "'${config_file}'" --out "'${out_path}'" --validation-errors-to-file
               else
                 echo "Config for ${csv_file} is not available"
-                csvcubed build "${csv_file}" --out "${out_path}" --validation-errors-to-file
+                csvcubed build "'${csv_file}'" --out "'${out_path}'" --validation-errors-to-file
               fi
               
               echo "---Inspecting CSV-W"
@@ -157,7 +157,7 @@ runs:
                 inspect_file_name="${inspect_file##*/}"                  
                 inspect_output_file="${out_path}${inspect_file_name}_inspect_output.txt"
 
-                csvcubed inspect "${inspect_file}" > "${inspect_output_file}"
+                csvcubed inspect "'${inspect_file}'" > "'${inspect_output_file}'"
               done
               
               processed_files+=($csv_file)
