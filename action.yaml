@@ -8,11 +8,12 @@ inputs:
   commit-outputs:
     description: Boolean indicating whether the outputs should be committed to the out folder (default is true).
     default: true
+    required: false
   publish-to-gh-pages:
     description: Boolean indicating whether the outputs should be published to GitHub Pages (default is true).
-    required: false
     default: true
-
+    required: false
+    
 on:
   push:
     branches:
