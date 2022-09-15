@@ -5,15 +5,15 @@ branding:
   icon: box
   color: white
 inputs:
-  commit-outputs-to-main-branch:
-    description: Boolean indicating whether the outputs (i.e. out folder) should be committed to the main branch (default is true).
+  commit-outputs-to-branch:
+    description: Boolean indicating whether the outputs (i.e. out folder) should be committed to the current branch (default is true).
     default: true
     required: false
   publish-to-gh-pages:
     description: Boolean indicating whether the outputs (i.e. out folder) should be published to the gh-pages branch and GitHub Pages (default is true).
     default: true
     required: false
-    
+
 on:
   push:
     branches:
@@ -251,7 +251,7 @@ runs:
 
     - name: Commit generated CSV-Ws and logs to the repository
       #if: ${{ fromJSON(steps.build-and-inspect-files.outputs.has_outputs) == true }}
-      if: ${{ (fromJSON(steps.build-and-inspect-files.outputs.has_outputs) == true) && (fromJSON(inputs.commit-outputs-to-main-branch) == true) }}
+      if: ${{ (fromJSON(steps.build-and-inspect-files.outputs.has_outputs) == true) && (fromJSON(inputs.commit-outputs-to-branch) == true) }}
       run: |
         echo "--Commiting Outputs to Main Branch"
 
@@ -265,7 +265,7 @@ runs:
       if: ${{ (fromJSON(steps.build-and-inspect-files.outputs.has_outputs) == true) && (fromJSON(inputs.publish-to-gh-pages) == true) }}
       run: |
         echo "--Publishing Output to GitHub Pages"
-        
+
         git checkout -b gh-pages
 
         repo_name=${GITHUB_REPOSITORY#*/}    
