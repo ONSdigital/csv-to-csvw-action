@@ -5,12 +5,12 @@ branding:
   icon: box
   color: white
 inputs:
-  commit-outputs:
-    description: Boolean indicating whether the outputs should be committed to the out folder (default is true).
+  commit-outputs-to-main-branch:
+    description: Boolean indicating whether the outputs (i.e. out folder) should be committed to the main branch (default is true).
     default: true
     required: false
   publish-to-gh-pages:
-    description: Boolean indicating whether the outputs should be published to GitHub Pages (default is true).
+    description: Boolean indicating whether the outputs (i.e. out folder) should be published to the gh-pages branch and GitHub Pages (default is true).
     default: true
     required: false
     
@@ -251,7 +251,7 @@ runs:
 
     - name: Commit generated CSV-Ws and logs to the repository
       #if: ${{ fromJSON(steps.build-and-inspect-files.outputs.has_outputs) == true }}
-      if: ${{ (fromJSON(steps.build-and-inspect-files.outputs.has_outputs) == true) && (fromJSON(inputs.commit-outputs) == true) }}
+      if: ${{ (fromJSON(steps.build-and-inspect-files.outputs.has_outputs) == true) && (fromJSON(inputs.commit-outputs-to-main-branch) == true) }}
       run: |
         echo "--Commiting Outputs to Main Branch"
 
@@ -304,6 +304,7 @@ runs:
 
         git add .nojekyll
         git add index.html
+        git add out/
         git commit -a -m "Updating outputs in GitHub Pages - $(date +'%d-%m-%Y at %H:%M:%S')"
         git push --set-upstream origin gh-pages -f
       shell: bash
