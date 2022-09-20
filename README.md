@@ -23,7 +23,7 @@ The action script can be observed in the [csv-to-csvw-action repository](https:/
 
 The action is triggered when the user adds, edits or deletes a CSV and optionally a configuration file, to the repository created by the user. The user can commit these files in any preferred folder structure, including committing to the root of the respository. An example set of files committed to the repository with various folder structures is available [here](https://github.com/GSS-Cogs/csv-to-csvw-action-example).
 
->NOTE: committing files to the `out/` folder of the repository will not trigger the action. This folder is reserved for storing the outputs produced by the action.
+>NOTE: committing files to the `out` folder at the root of the repository will not trigger the action. This folder is reserved for storing the outputs produced by the action.
 
 ### 2. Building and inspecting CSV-Ws
 
@@ -39,15 +39,15 @@ The action publishes CSV-Ws and inspect command outputs to GitHub artifacts. The
 
 #### Committing outputs to `out` folder
 
-If the `commit-outputs-to-branch` configuration is set to `true`, the action commits the outputs to a folder called `out` in the root of the repository upon completition. This helps to maintains a history of the outputs produced.
+If the `commit-outputs-to-branch` configuration is set to `true`, the action commits the outputs to a folder called `out` in the root of the repository upon completion. This helps to maintains a history of the outputs produced.
 
 #### GitHub Pages
 
-If the `publish-to-gh-pages` configuration is set to `true`, the action publishes the CSV-Ws and inspect command outputs to [GitHub Pages](https://pages.github.com/)' static file hosting. The script generates an `index.html` page listing the CSV-W outputs. The URL to access the GitHub page is provided in GitHub pages setting of the repository which is discussed in the [Setup](#setup) section below.
+If the `publish-to-gh-pages` configuration is set to `true`, the action publishes the CSV-Ws and inspect command outputs to [GitHub Pages](https://pages.github.com/)' static file hosting. The action generates an `index.html` page listing the CSV-W outputs. The URL to access the GitHub page is provided in GitHub pages setting of the repository which is discussed in the [Setup](#setup) section below.
 
 ## Setup
 
-To use the CSV-to-CSV-W GitHub action,
+To use the csv-to-csvw GitHub action,
 
 1. Ensure that you [created](https://github.com/signup) and/or [logged into](https://github.com/login) your GitHub user account.
 
@@ -91,14 +91,14 @@ jobs:
 ![The commit inputs image shows the Upload Files option provided in the GitHub web console.](docs/images/commit_files.png "Commit Inputs")
 
 6. Once the inputs have been committed, the action will automatically [run](#key-steps-performed-by-the-action). To see the progress of the action, go to the `Actions` section in the GitHub web console.
-![The image shows that the CSV-to-CSV-W GitHub Action is running in the GitHub web console.](docs/images/action_running.png "GitHub Action Running")
+![The image shows that the csv-to-csvw GitHub Action is running in the GitHub web console.](docs/images/action_running.png "GitHub Action Running")
 A more detailed view of the progress of the action can be seen by clicking on the action.
-![The image shows a detailed view of the progress of CSV-to-CSV-W GitHub Action in the GitHub web console.](docs/images/action_running_detailed.png "GitHub Action Running Detailed")
+![The image shows a detailed view of the progress of csv-to-csvw GitHub Action in the GitHub web console.](docs/images/action_running_detailed.png "GitHub Action Running Detailed")
 
-7. Once the CSV-to-CSVw action has finished, another action called `pages build and deployment` will run. This action is responsible for deploying the outputs to the GitHub pages.
+7. Once the csv-to-csvw action has finished, another action called `pages build and deployment` will run. This action is responsible for deploying the outputs to GitHub pages.
 ![The images shows the progress of pages build and deploy action.](docs/images/pages_build_action.png "Pages Build and Deployment Action")
 
-8. Now we are ready to explore the outputs produced by the action. First look at the `out/` folder within the repository. If you are using the GitHub Desktop Client or the Github Command Line Interface, make sure to run `git pull` beforehand. The `out/` folder now consists of the CSV-Ws and inspect command logs generated for inputs committed to the repository.
+8. Now we are ready to explore the outputs produced by the action. First look at the `out` folder within the repository. If you are using the GitHub Desktop Client or the Github Command Line Interface, make sure to run `git pull` beforehand. The `out` folder now consists of the CSV-Ws and inspect command logs generated for inputs committed to the repository.
 ![The images shows the output stored in out folder which contains the CSV-Ws.](docs/images/out_folder.png "Out Folder")
 Then download the artifacts produced by the GitHub action. The downloaded folder consists of the CSV-Ws and inspect command logs.
 ![The image shows the out folder downloaded from GitHub artifacts. It contains the generated CSV-Ws.](docs/images/artifact_folder.png "Artifact Folder")
