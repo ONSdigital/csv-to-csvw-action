@@ -4,7 +4,7 @@ The [csv-to-csvw GitHub action](https://github.com/marketplace/actions/csv-to-cs
 
 For information on how to install csvcubed locally, take a look at the [installation quick start](https://gss-cogs.github.io/csvcubed-docs/external/quick-start/installation/).
 
-The remainder of this guide walks you through the supported inputs, how the csv-to-csvw GitHub action works, and then guides you through how to [use the action](#using-the-action) on your own GitHub repository to convert CSV inputs into CSV-Ws.
+The remainder of this guide walks you through how to prepare the inputs, how the csv-to-csvw GitHub action works, and then guides you through how to [use the action](#using-the-action) on your own GitHub repository to convert CSV inputs into CSV-Ws.
 
 ## Inputs 
 
