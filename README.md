@@ -31,7 +31,7 @@ On a new commit, the action runs the [`csvcubed build`](https://gss-cogs.github.
 
 The [`csvcubed inspect`](https://gss-cogs.github.io/csvcubed-docs/external/guides/command-line/inspect-command/) command is then run on all new or updated CSV-Ws; the output is then saved in an `inspect_output.txt` file next to each CSV-W output. For example, for the metadata JSON file at `out/my_folder/my_data/my_data.csv-metadata.json` a file, containing the [`csvcubed inspect`](https://gss-cogs.github.io/csvcubed-docs/external/guides/command-line/inspect-command/) command output, named `out/my_folder/my_data/my_data.csv-metadata.json_inspect_output.txt` is created.
 
-To see the progress of the action, go to the `Actions` section in the GitHub web console.
+The progress of the action can be observed by going to the `Actions` section in the GitHub web console.
 ![The image shows that the csv-to-csvw GitHub Action is running in the GitHub web console.](docs/images/action_running.png "GitHub Action Running")
 A more detailed view of the progress of the action can be seen by clicking on the action.
 ![The image shows a detailed view of the progress of csv-to-csvw GitHub Action in the GitHub web console.](docs/images/action_running_detailed.png "GitHub Action Running Detailed")
