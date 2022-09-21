@@ -4,7 +4,7 @@ The [csv-to-csvw GitHub action](https://github.com/marketplace/actions/csv-to-cs
 
 For information on how to install csvcubed locally, take a look at the [installation quick start](https://gss-cogs.github.io/csvcubed-docs/external/quick-start/installation/).
 
-The remainder of this guide walks you through how the csv-to-csvw GitHub action works, and then guides you through how to [use the action](#using-the-action) on your own GitHub repository to convert CSV inputs into CSV-Ws.
+The remainder of this guide walks you through the supported inputs, how the csv-to-csvw GitHub action works, and then guides you through how to [use the action](#using-the-action) on your own GitHub repository to convert CSV inputs into CSV-Ws.
 
 ## Inputs 
 
@@ -67,7 +67,7 @@ To use the csv-to-csvw GitHub action,
 
 3. Create a new file with extension `.yaml` (i.e. an YAML file) under the `.github/workflows` folder and give it a name (e.g. action.yaml). Then add the below content into it and commit the file.
 
-    >NOTE: If you would like to integrate the csv-to-csvw action into an existing GitHub action workflow, you can do so by adding the entire `generate_csvw_from_csv_upload` job or the `csv-to-csvw action` step into the workflow file.
+    >NOTE: If you would like to integrate the csv-to-csvw action into an existing GitHub action workflow, you can do so by adding the entire `generate_csvw_from_csv_upload` job or the `csv-to-csvw action` step into the existing workflow file.
 
     > NOTE: Read the comments in below content to learn more about the supported configurations.
 
@@ -99,7 +99,7 @@ To use the csv-to-csvw GitHub action,
 
 4. Create a new branch called `gh-pages`. This branch will be used to publish the outputs to GitHub Pages. Then go to the repository's settings and set the branch for GitHub Pages - under the `Source` section, set the `Branch` to `gh-pages` and set the folder location to `/(root)`. Also, keep a note of the URL at which your GitHub Pages site is published at.
     > NOTE: This step is only necessary if you would like to publish the outputs to GitHub Pages by setting the `publish-to-gh-pages` option to `true`. Otherwise, you can skip this step.
-    
+
     ![GitHub Pages setting shows the branch set for GitHub Pages. The URL at which the GitHub Pages site is published at is also displayed in this setting.](docs/images/github_pages_setting.png "GitHub Pages Setting")
 
 5. Now that the repository is created and the GitHub Pages setting is configured, you can commit and push your inputs using the GitHub web console. Once the inputs are committed, as discussed in the [Build Process](#build-process) section, observe the progress of the action and wait for it to complete.
@@ -107,11 +107,18 @@ To use the csv-to-csvw GitHub action,
 
 ### Observing the outputs
 
-Now we are ready to explore the outputs produced by the action. First look at the `out` folder within the repository. If you are using the GitHub Desktop Client or the Github Command Line Interface, make sure to run `git pull` beforehand. The `out` folder now consists of the CSV-Ws and inspect command logs generated for inputs committed to the repository.
+Now we are ready to explore the outputs produced by the action. First look at the `out` folder within the repository. The `out` folder now consists of the CSV-Ws and inspect command logs generated for inputs committed to the repository.
+
+>NOTE: If you are using the GitHub Desktop Client or the Github Command Line Interface, make sure to run `git pull` beforehand.
+
 ![The images shows the output stored in out folder which contains the CSV-Ws.](docs/images/out_folder.png "Out Folder")
 
 Then download the artifacts produced by the GitHub action. The downloaded folder consists of the CSV-Ws and inspect command logs.
 ![The image shows the out folder downloaded from GitHub artifacts. It contains the generated CSV-Ws.](docs/images/artifact_folder.png "Artifact Folder")
 
-Finally, open the GitHub Pages URL noted in Step 2 in the preferred web browser. A web page with all the outputs listed with downloadable links will appear in the browser.
+Finally, open the GitHub Pages URL (noted in Step 2 of the previous section) in the preferred web browser. A web page with all the outputs listed with downloadable links will appear in the browser.
 ![The image shows the GitHub Pages site which lists all the CSV-W content generated.](docs/images/github_pages_web_page.png "GitHub Pages Site")
+
+## Reporting issues
+
+If you have encountered any issues when using the csv-to-csvw action, please raise them at our [Csv-to-csvw Action Issues Page](https://github.com/GSS-Cogs/csv-to-csvw-action/issues).
