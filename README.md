@@ -60,7 +60,7 @@ To use the csv-to-csvw GitHub action,
 
 1. Ensure that you [created](https://github.com/signup) and/or [logged into](https://github.com/login) your GitHub user account.
 
-2. Create a new repository and give it a name.
+2. (Optional) Create a new repository and give it a name.
 
     >NOTE: If you would like to use the csv-to-csvw action in an existing repository, you can skip this step.
     
