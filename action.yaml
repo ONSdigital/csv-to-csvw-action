@@ -66,11 +66,17 @@ runs:
 
     - name: Build and inspect files
       id: build-and-inspect-files
+      env:
+        FILES_ADDED_MODIFIED: ${{ steps.get-added-changed-removed-files.outputs.added_modified }}
+        FILES_RENAMED: ${{ steps.get-added-changed-removed-files.outputs.renamed }}
+        PATHS_TO_EXCLUDE_IN: ${{ inputs.paths-to-exclude }}
       run: build-and-inspect-files.sh
       shell: bash
 
     - name: Handle deleted files
       id: process-deleted-files
+      env:
+        FILES_REMOVED: ${{ steps.get-added-changed-removed-files.outputs.removed }}
       run: process-deleted-files.sh
       shell: bash
 

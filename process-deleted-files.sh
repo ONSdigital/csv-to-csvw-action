@@ -1,5 +1,5 @@
-echo "::set-output name=has_outputs::${{ toJSON(false) }}"
-mapfile -d ',' -t deleted_files < <(printf '%s,' '${{ steps.get-added-changed-removed-files.outputs.removed }}')
+echo "::set-output name=has_outputs::false"
+mapfile -d ',' -t deleted_files < <(printf '%s,' "$FILES_REMOVED")
 for file in "${deleted_files[@]}"; do
     echo $'\n'
     echo "---Handling Deletions for File: ${file}"            
@@ -58,6 +58,6 @@ for file in "${deleted_files[@]}"; do
     
     git push
     
-    echo "::set-output name=has_outputs::${{ toJSON(true) }}"
+    echo "::set-output name=has_outputs::true"
     echo "---Finished Handling Deletions for File: ${file}"
 done

@@ -1,13 +1,13 @@
 source file-patterns.sh
 
-echo "::set-output name=has_outputs::${{ toJSON(false) }}"
+echo "::set-output name=has_outputs::false"
 
-mapfile -d ',' -t detected_files < <(printf '%s,' '${{ steps.get-added-changed-removed-files.outputs.added_modified }}')
-mapfile -d ',' -t renamed_files < <(printf '%s,' '${{ steps.get-added-changed-removed-files.outputs.renamed }}')
+mapfile -d ',' -t detected_files < <(printf '%s,' "$FILES_ADDED_MODIFIED")
+mapfile -d ',' -t renamed_files < <(printf '%s,' "$FILES_RENAMED")
 detected_files+=(${renamed_files[@]})
 echo "detected_files: ${detected_files[@]}"
 
-mapfile -t paths_to_exclude < <(printf '%s\r\n' '${{ inputs.paths-to-exclude }}')
+mapfile -t paths_to_exclude < <(printf '%s\r\n' "$PATHS_TO_EXCLUDE_IN")
 
 excluded_files=( $(get_files_matching_glob_pattern "$paths_to_exclude" ) )
 echo "Excluded files: ${excludes_files[@]}"
@@ -125,7 +125,7 @@ for file in "${detected_files[@]}"; do
         processed_files+=($config_file)
         echo "processed_files: ${processed_files[@]}"
         
-        echo "::set-output name=has_outputs::${{ toJSON(true) }}"
+        echo "::set-output name=has_outputs::true"
         
         echo "---Finished Processing File: ${file}"
         echo "======================"                
