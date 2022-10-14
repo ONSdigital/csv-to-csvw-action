@@ -70,6 +70,8 @@ runs:
         FILES_ADDED_MODIFIED: ${{ steps.get-added-changed-removed-files.outputs.added_modified }}
         FILES_RENAMED: ${{ steps.get-added-changed-removed-files.outputs.renamed }}
         PATHS_TO_EXCLUDE_IN: ${{ inputs.paths-to-exclude }}
+        COMMIT_OUTPUTS_TO_BRANCH:  ${{ fromJSON(inputs.commit-outputs-to-branch) }}
+        COMMIT_OUTPUTS_TO_GH_PAGES:  ${{ fromJSON(inputs.commit-outputs-to-branch) }}
       run: build-and-inspect-files.sh
       shell: bash
 
@@ -88,7 +90,7 @@ runs:
         path: out
 
     - name: Commit generated CSV-Ws and logs to the repository
-      if: ${{ (fromJSON(steps.build-and-inspect-files.outputs.has_outputs) == true) && (fromJSON(inputs.commit-outputs-to-branch) == true) }}
+      if: ${{ (fromJSON(steps.build-and-inspect-files.outputs.has_outputs) == true || fromJSON(steps.process-deleted-files.outputs.has_outputs)) && (fromJSON(inputs.commit-outputs-to-branch) == true) }}
       run: |
         echo "--Commiting Outputs to Main Branch"
 
@@ -98,6 +100,6 @@ runs:
       shell: bash
 
     - name: Publish CSV-Ws and logs to GitHub Pages
-      if: ${{ (fromJSON(steps.build-and-inspect-files.outputs.has_outputs) == true) && (fromJSON(inputs.publish-to-gh-pages) == true) }}
+      if: ${{ (fromJSON(steps.build-and-inspect-files.outputs.has_outputs) || fromJSON(steps.process-deleted-files.outputs.has_outputs)) && (fromJSON(inputs.publish-to-gh-pages) == true) }}
       run: publish-csvws-to-github-pages.sh
       shell: bash

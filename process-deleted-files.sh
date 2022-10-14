@@ -11,7 +11,6 @@ deleted_files+=(${excluded_files[@]})
 mapfile -t deleted_files < <(printf "%s\n" "${deleted_files[@]}" | sort)
 
 num_outputs_deleted=0
-num_outputs_created=0
 
 function delete_csvw_outputs {
     local csv_file="$1"
@@ -50,7 +49,6 @@ for file in "${deleted_files[@]}"; do
         then
             # The JSON file has been deleted but the csv file still exists so we should rebuild it.
             build_and_inspect_csvw "$csv_file"
-            num_outputs_created=$(( num_outputs_created + 1 ))
         fi
     fi
    
@@ -65,11 +63,3 @@ then
     git commit -m "Deleted unnecessary outputs - $(date +'%d-%m-%Y at %H:%M:%S')"
     git push
 fi
-
-if [ $num_outputs_created -gt 1 ]
-then
-    git add out/
-    git commit -m "Outputs generated from csv upload - $(date +'%d-%m-%Y at %H:%M:%S')"
-    git push
-fi
-
