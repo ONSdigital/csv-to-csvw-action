@@ -95,7 +95,7 @@ runs:
         echo "--Commiting Outputs to Main Branch"
 
         git add out/
-        git commit -m "Outputs generated from csv upload - $(date +'%d-%m-%Y at %H:%M:%S')"
+        git commit -m "CSV-W Updates - $(date +'%d-%m-%Y at %H:%M:%S')"
         git push
       shell: bash
 

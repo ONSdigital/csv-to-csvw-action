@@ -10,16 +10,12 @@ deleted_files+=(${excluded_files[@]})
 # ensuring the JSON file doesn't come first in which case we'd build the CSV-W again and then immediately delete it.
 mapfile -t deleted_files < <(printf "%s\n" "${deleted_files[@]}" | sort)
 
-num_outputs_deleted=0
-
 function delete_csvw_outputs {
     local csv_file="$1"
 
     local out_path=$(get_out_path "$csv_file")
     
     if [[ -d "$out_path" ]]; then
-        # echo "outputs exist, hence deleting."
-        num_outputs_deleted=$(( num_outputs_deleted + 1 ))
         git rm -r "$out_path"
     fi
 }
@@ -55,11 +51,3 @@ for file in "${deleted_files[@]}"; do
     echo "::set-output name=has_outputs::true"
     echo "---Finished Handling Deletions for File: ${file}"
 done
-
-# todo: We also need to ensure that we delete the outputs from the gh-pages branch too.
-
-if [ $num_outputs_deleted -gt 0 ]
-then
-    git commit -m "Deleted unnecessary outputs - $(date +'%d-%m-%Y at %H:%M:%S')"
-    git push
-fi
