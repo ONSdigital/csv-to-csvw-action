@@ -31,7 +31,6 @@ function get_files_matching_glob_pattern {
 mapfile -t paths_to_exclude < <(printf '%s\r\n' "$PATHS_TO_EXCLUDE_IN")
 
 excluded_files=( $(get_files_matching_glob_pattern "$paths_to_exclude" ) )
-echo "Excluded files: ${excludes_files[@]}"
 
 function is_excluded_file {
     path_to_test=$(readlink -f $1)
