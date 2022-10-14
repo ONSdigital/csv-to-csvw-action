@@ -37,17 +37,3 @@ function replace_extension {
 
     echo "$file_without_extension.$new_extension"
 }
-
-# if is_in_root_directory "$1"
-# then
-#     echo "Yes Root"
-# else
-#     echo "Not root"
-# fi
-
-if [[ $(get_top_level_folder_name "$1") == "docs" ]]
-then    
-    echo "Is docs"
-else 
-    echo "Is not docs"
-fi
