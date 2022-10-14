@@ -58,6 +58,6 @@ done
 
 if [ $num_outputs_deleted -gt 0 ]
 then
-    git commit -m "Deleted outputs for file ${file} - $(date +'%d-%m-%Y at %H:%M:%S')"
+    git commit -m "Deleted unnecessary outputs - $(date +'%d-%m-%Y at %H:%M:%S')"
     git push
 fi
