@@ -33,8 +33,10 @@ for file in "${deleted_files[@]}"; do
 
     if [[ $(get_top_level_folder_name "$file") == "out" ]]
     then
+        echo "This is not the file we're looking for. It is located in the output directory."
         continue
     elif [[ $file_extension != "csv" && $file_extension != "json" ]]; then
+        echo "This is not the file we're looking for. Neither JSON nor CSV."
         continue
     fi
     
