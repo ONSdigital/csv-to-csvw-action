@@ -2,7 +2,7 @@ source build-and-inspect-files.sh
 
 echo "::set-output name=has_outputs::false"
 
-mapfile -t deleted_files < <(printf "%s\n" "$FILES_REMOVED")
+mapfile -d ',' -t deleted_files < <(printf "%s," "$FILES_REMOVED")
 
 deleted_files+=(${excluded_files[@]})
 
@@ -17,9 +17,6 @@ function delete_csvw_outputs {
 
     local out_path=$(get_out_path "$csv_file")
     
-    # echo "config_file: ${config_file}"
-    # echo "out_folder: ${out_folder}"
-
     if [[ -d "$out_path" ]]; then
         # echo "outputs exist, hence deleting."
         num_outputs_deleted=$(( num_outputs_deleted + 1 ))
@@ -33,8 +30,6 @@ for file in "${deleted_files[@]}"; do
 
     file_name="${file_without_extension##*/}"
     file_extension="${file##*.}"
-
-    echo "---Extracting Delete File Info"
 
     if [[ $(get_top_level_folder_name "$file") == "out" ]]
     then
