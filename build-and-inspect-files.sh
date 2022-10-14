@@ -22,8 +22,10 @@ function get_companion_csv_file_for_json {
 }
 
 function get_out_path {
-    csv_file="$1"
+    local csv_file="$1"
 
+    local csv_file_without_extension="${csv_file%.*}"
+    local csv_file_name="${csv_file_without_extension##*/}"
     # Creating the out path to store outputs.
     if is_in_root_directory "$csv_file"; then
         echo "out/${csv_file_name}/"
@@ -36,9 +38,6 @@ function get_out_path {
 function build_and_inspect_csvw {
     local csv_file="$1"
     local json_file="$2"
-
-    local csv_file_without_extension="${csv_file%.*}"
-    local csv_file_name="${file_without_extension##*/}"
 
     local out_path=$(get_out_path "$csv_file")
 
