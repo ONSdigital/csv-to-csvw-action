@@ -33,7 +33,7 @@ for file in "${deleted_files[@]}"; do
 
     echo "---Extracting Delete File Info"
 
-    if [[ $(get_top_level_folder_name "$file") == "out"]]
+    if [[ $(get_top_level_folder_name "$file") == "out" ]]
     then
         continue
     elif [[ $file_extension != "csv" && $file_extension != "json" ]]; then

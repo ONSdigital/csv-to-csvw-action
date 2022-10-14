@@ -83,7 +83,7 @@ for file in "${detected_files[@]}"; do
     if [[ " ${processed_files[@]} " =~ " ${file} " ]]; then
         echo "File is already processed, hence ignoring it."
         continue
-    elif [[ $(get_top_level_folder_name "$file") == "out"]]
+    elif [[ $(get_top_level_folder_name "$file") == "out" ]]
     then
         # "File is in 'out' directory, ignoring it."
         continue
