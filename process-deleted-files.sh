@@ -58,7 +58,6 @@ for file in "${deleted_files[@]}"; do
     echo $'\n'
     echo "---Handling Deletions for File: ${file}"            
 
-    file_name="${file_without_extension##*/}"
     file_extension="${file##*.}"
 
     if [[ $(get_top_level_folder_name "$file") == "out" ]]
