@@ -5,7 +5,7 @@ then
     set -x    
 fi
 
-echo "::set-output name=has_outputs::false"
+echo "has_outputs=false" >> $GITHUB_OUTPUT
 
 mapfile -d ',' -t deleted_files < <(printf "%s," "$FILES_REMOVED")
 
@@ -16,6 +16,8 @@ deleted_files+=(${excluded_files[@]})
 mapfile -t deleted_files < <(printf "%s\n" "${deleted_files[@]}" | sort)
 
 function delete_csvw_outputs {
+    echo "has_outputs=true" >> $GITHUB_OUTPUT
+
     local csv_file="$1"
     local out_path=$(get_out_path "$csv_file")
     
@@ -78,6 +80,5 @@ for file in "${deleted_files[@]}"; do
         fi
     fi
    
-    echo "::set-output name=has_outputs::true"
     echo "---Finished Handling Deletions for File: ${file}"
 done

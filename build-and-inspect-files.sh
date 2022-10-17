@@ -38,6 +38,8 @@ function get_out_path {
 }
 
 function build_and_inspect_csvw {
+    echo "has_outputs=true" >> $GITHUB_OUTPUT
+
     local csv_file="$1"
     local json_file="$2"
 
@@ -66,7 +68,7 @@ function build_and_inspect_csvw {
 }
 
 # Main logic starts here
-echo "::set-output name=has_outputs::false"
+echo "has_outputs=false" >> $GITHUB_OUTPUT
 
 mapfile -d ',' -t detected_files < <(printf '%s,' "$FILES_ADDED_MODIFIED")
 mapfile -d ',' -t renamed_files < <(printf '%s,' "$FILES_RENAMED")
@@ -125,9 +127,7 @@ for file in "${detected_files[@]}"; do
     
     processed_files+=($csv_file)
     processed_files+=($config_file)
-    
-    echo "::set-output name=has_outputs::true"
-    
+       
     echo "---Finished Processing File: ${file}"
     echo "======================"                
 done
