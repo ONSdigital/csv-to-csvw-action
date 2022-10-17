@@ -97,7 +97,18 @@ To use the csv-to-csvw GitHub action,
             commit-outputs-to-branch: true
             # Boolean indicating whether the outputs (i.e. out folder) should be published to the gh-pages branch and GitHub Pages (default is true).
             publish-to-gh-pages: true
+            # File paths which csv-to-csvw should avoid converting into CSV-Ws
+            paths-to-exclude: |
+                # This will ignore all files immediately in the `ignore` directory.
+                ignore/*
+                # This will recursively ignore all files in any subfolders of the `ignore` directory.
+                ignore/**/*
+            # (WARNING: Advanced Configuration) Boolean indicating whether to only convert CSV files which have a companion JSON configuration file into CSV-Ws.
+            config-required: false
+            # (WARNING: Advanced Configuration) Boolean indicating whether to output debug statements in order to help diagnose a fault or unexpected behaviour.
+            debug: false
     ```
+
     ![The create workflow file image shows creating and commiting a new action.yaml file.](docs/images/create_workflow_file.png "Create Workflow File")
 
     Make sure to configure the [`commit-outputs-to-branch`](#committing-outputs-to-out-folder) and [`publish-to-gh-pages`](#github-pages) configuration parameters to specify where you want the build outputs to be published.
