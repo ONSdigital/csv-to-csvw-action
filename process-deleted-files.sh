@@ -25,13 +25,8 @@ function delete_csvw_outputs {
     then
         # Remove the files from the gh-pages branch as well.
 
-        # Stash the changes in the current branch/tag 
-        git stash
         # Switch to the gh-pages branch
         git checkout gh-pages
-        # Load any existing uncommitted files from the stash.
-        # Stash may not exist, lets get a success status code either way.
-        git stash pop || true 
 
         echo "Removing $out_path from gh-pages branch."
 
@@ -39,12 +34,8 @@ function delete_csvw_outputs {
             git rm -r "$out_path"
         fi
 
-        # Place all uncommitted files back into the stash
-        git stash
         # Go back to the original branch/tag we were working on.
         git checkout "$GITHUB_REF_NAME"
-        # Load any uncommitted files back from the stash in the original branch/tag
-        git stash pop
     fi
 }
 
