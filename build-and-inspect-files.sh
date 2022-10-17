@@ -72,7 +72,7 @@ function build_and_inspect_csvw {
         # Stash the changes in the current branch/tag 
         git stash 
         # Switch to the gh-pages branch
-        git checkout gh-pages
+        git checkout gh-pages || git checkout -b gh-pages
         # Load any existing uncommitted files from the stash.
         # Stash may not exist, lets get a success status code either way.
         git stash pop || true 

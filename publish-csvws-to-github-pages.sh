@@ -1,6 +1,6 @@
 echo "--Publishing Output to GitHub Pages"
 
-git checkout -b gh-pages
+git checkout gh-pages
 
 # Get the uncommitted changes we've been making to this branch throughout this action.
 git stash pop
