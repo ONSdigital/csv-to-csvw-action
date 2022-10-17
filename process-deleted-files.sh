@@ -1,6 +1,6 @@
 source build-and-inspect-files.sh
 
-if [ -v $DEBUG && "$DEBUG" == true ]
+if [[ -v $DEBUG && "$DEBUG" == true ]]
 then
     set -x    
 fi

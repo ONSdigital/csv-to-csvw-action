@@ -1,6 +1,6 @@
 echo "--Publishing Output to GitHub Pages"
 
-if [ -v $DEBUG && "$DEBUG" == true ]
+if [[ -v $DEBUG && "$DEBUG" == true ]]
 then
     set -x    
 fi
@@ -8,7 +8,11 @@ fi
 git checkout gh-pages
 
 # Get the uncommitted changes we've been making to this branch throughout this action.
-cp -r "$RUNNER_TEMP/out" .
+if [[ -d "$RUNNER_TEMP/out" ]]
+then
+    cp -r "$RUNNER_TEMP/out" .
+fi
+
 # Pick up any file deletions stored in the stash
 git stash pop || true
 

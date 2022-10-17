@@ -1,7 +1,7 @@
 source file-patterns.sh
 source utils.sh
 
-if [ -v $DEBUG && "$DEBUG" == true ]
+if [[ -v $DEBUG && "$DEBUG" == true ]]
 then
     set -x    
 fi
