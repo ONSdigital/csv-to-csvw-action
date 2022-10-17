@@ -71,7 +71,7 @@ for file in "${deleted_files[@]}"; do
         config_file="$file"
         csv_file=$(get_companion_csv_file_for_json "$file")
 
-        if [[ -f "$csv_file" ]] && ! is_excluded_file "$csv_file" && [ "$JSON_CONFIG_REQUIRED" == false ]
+        if [[ -f "$csv_file" ]] && ! is_excluded_file "$csv_file" && [[ "$JSON_CONFIG_REQUIRED" == false ]]
         then
             # The JSON file has been deleted but the csv file still exists so we should rebuild it.
             build_and_inspect_csvw "$csv_file"
