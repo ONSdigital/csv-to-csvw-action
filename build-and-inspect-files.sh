@@ -1,6 +1,7 @@
 source file-patterns.sh
 source utils.sh
 
+set -x
 
 function get_companion_json_file_for_csv {
     local csv_file="$1"
@@ -66,7 +67,10 @@ function build_and_inspect_csvw {
     if [[ "$COMMIT_OUTPUTS_TO_GH_PAGES" = true ]]
     then
         # Copy relevant files into a temporary directory so we can copy them to the gh-pages branch
+
+        echo "Creating temp dir: $RUNNER_TEMP/$out_dir"
         mkdir -p "$RUNNER_TEMP/$out_dir"
+
         cp -r "$out_dir" "$RUNNER_TEMP/$out_dir"
 
         # Stash the changes in the current branch/tag 
@@ -81,7 +85,9 @@ function build_and_inspect_csvw {
         # Copy new/modified files from the temp directory.
         cp -r "$RUNNER_TEMP/$out_dir" "$out_dir" 
         # Stage/track the un-committed changes we've made here.
-        git add "$out_dir" 
+        git add out
+
+        git status
 
         # Place all uncommitted files back into the stash
         git stash        

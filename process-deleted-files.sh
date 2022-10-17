@@ -1,5 +1,7 @@
 source build-and-inspect-files.sh
 
+set -x
+
 echo "::set-output name=has_outputs::false"
 
 mapfile -d ',' -t deleted_files < <(printf "%s," "$FILES_REMOVED")

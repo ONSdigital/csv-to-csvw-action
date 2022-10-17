@@ -1,5 +1,7 @@
 echo "--Publishing Output to GitHub Pages"
 
+set -x    
+
 git checkout gh-pages
 
 # Get the uncommitted changes we've been making to this branch throughout this action.
