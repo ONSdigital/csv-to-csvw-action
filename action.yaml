@@ -55,8 +55,18 @@ runs:
     - name: Configure git
       run: |
         git config --global user.name "CSV-W from csv upload generator"
+        # Clear out the relevant stashes
         git pull
+        git stash clear
       shell: bash
+
+    - name: Update gh-pages and clear branch
+      if: ${{ fromJSON(inputs.publish-to-gh-pages) == true }}
+      run: |
+        git checkout gh-pages || git checkout -b gh-pages
+        git pull
+        git stash clear
+        git checkout "$GITHUB_REF_NAME"
 
     - name: Get added/modified/removed files
       id: get-added-changed-removed-files
