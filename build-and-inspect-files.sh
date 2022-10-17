@@ -27,10 +27,10 @@ function get_out_path {
     local csv_file_name="${csv_file_without_extension##*/}"
     # Creating the out path to store outputs.
     if is_in_root_directory "$csv_file"; then
-        echo "$RUNNER_TEMP/out/${csv_file_name}/"
+        echo "out/${csv_file_name}/"
     else
         parent_directory=$(get_parent_directory_for_file "$csv_file")
-        echo "$RUNNER_TEMP/out/${parent_directory}/${csv_file_name}/"
+        echo "out/${parent_directory}/${csv_file_name}/"
     fi
 }
 
@@ -38,7 +38,7 @@ function build_and_inspect_csvw {
     local csv_file="$1"
     local json_file="$2"
 
-    local out_dir=$(get_out_path "$csv_file")
+    local out_dir="$RUNNER_TEMP/$(get_out_path '$csv_file')"
 
     echo "---Building CSV-W for $csv_file"
     echo "Building CSV-W"
