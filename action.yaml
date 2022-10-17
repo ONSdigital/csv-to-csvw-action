@@ -26,10 +26,11 @@ inputs:
     default: false
     required: false
 
+env: 
+  DEBUG: ${{ fromJSON(inputs.debug) == true }}
+
 runs:
   using: composite
-  env: 
-    DEBUG: ${{ fromJSON(inputs.debug) == true }}
   steps:
     - name: Set up Python 3.9
       uses: actions/setup-python@v2
