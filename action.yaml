@@ -105,6 +105,8 @@ runs:
       run: |
         echo "--Commiting Outputs to Main Branch"
 
+        cp -r "$RUNNER_TEMP/out/*" out
+
         git add out/
         git commit -m "CSV-W Updates - $(date +'%d-%m-%Y at %H:%M:%S')"
         git push

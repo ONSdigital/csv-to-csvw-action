@@ -27,10 +27,10 @@ function get_out_path {
     local csv_file_name="${csv_file_without_extension##*/}"
     # Creating the out path to store outputs.
     if is_in_root_directory "$csv_file"; then
-        echo "out/${csv_file_name}/"
+        echo "$RUNNER_TEMP/out/${csv_file_name}/"
     else
         parent_directory=$(get_parent_directory_for_file "$csv_file")
-        echo "out/${parent_directory}/${csv_file_name}/"
+        echo "$RUNNER_TEMP/out/${parent_directory}/${csv_file_name}/"
     fi
 }
 
@@ -60,31 +60,6 @@ function build_and_inspect_csvw {
 
         csvcubed inspect "$inspect_file" > "$inspect_output_file"
     done
-
-    # Stage/track the un-committed changes we've made here.
-    git add "$out_dir"
-
-    if [[ "$COMMIT_OUTPUTS_TO_GH_PAGES" = true ]]
-    then
-        # Copy relevant files into a temporary directory so we can copy them to the gh-pages branch
-
-        echo "Creating temp dir: $RUNNER_TEMP/$out_dir"
-        mkdir -p "$RUNNER_TEMP/$out_dir"
-
-        cp -r "$out_dir*" "$RUNNER_TEMP/$out_dir"
-
-        # Switch to the gh-pages branch
-        git checkout gh-pages
-
-        mkdir -p "$out_dir"
-        # Copy new/modified files from the temp directory.
-        cp -r "$RUNNER_TEMP/$out_dir*" "$out_dir" 
-        # Stage/track the un-committed changes we've made here.
-        git add out
-
-        # Go back to the original branch/tag we were working on.
-        git checkout "$GITHUB_REF_NAME"
-    fi
 }
 
 # Main logic starts here

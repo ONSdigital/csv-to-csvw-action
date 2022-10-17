@@ -5,7 +5,7 @@ set -x
 git checkout gh-pages
 
 # Get the uncommitted changes we've been making to this branch throughout this action.
-git stash pop
+cp -r "$RUNNER_TEMP/out/*" out
 
 repo_name=${GITHUB_REPOSITORY#*/}    
 username=${GITHUB_REPOSITORY_OWNER}
