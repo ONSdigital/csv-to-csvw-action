@@ -26,9 +26,6 @@ inputs:
     default: false
     required: false
 
-env: 
-  DEBUG: ${{ fromJSON(inputs.debug) == true }}
-
 runs:
   using: composite
   steps:
@@ -88,6 +85,7 @@ runs:
         PATHS_TO_EXCLUDE_IN: ${{ inputs.paths-to-exclude }}
         JSON_CONFIG_REQUIRED: ${{ inputs.config-required }}
         COMMIT_OUTPUTS_TO_GH_PAGES:  ${{ fromJSON(inputs.commit-outputs-to-branch) }}
+        DEBUG: ${{ fromJSON(inputs.debug) == true }}
       run: build-and-inspect-files.sh
       shell: bash
 
@@ -97,6 +95,7 @@ runs:
         FILES_REMOVED: ${{ steps.get-added-changed-removed-files.outputs.removed }}
         JSON_CONFIG_REQUIRED: ${{ inputs.config-required }}
         COMMIT_OUTPUTS_TO_GH_PAGES:  ${{ fromJSON(inputs.commit-outputs-to-branch) }}
+        DEBUG: ${{ fromJSON(inputs.debug) == true }}
       run: process-deleted-files.sh
       shell: bash
 
@@ -124,5 +123,7 @@ runs:
 
     - name: Publish CSV-Ws and logs to GitHub Pages
       if: ${{ (fromJSON(steps.build-and-inspect-files.outputs.has_outputs) || fromJSON(steps.process-deleted-files.outputs.has_outputs)) && (fromJSON(inputs.publish-to-gh-pages) == true) }}
+      env:
+        DEBUG: ${{ fromJSON(inputs.debug) == true }}
       run: publish-csvws-to-github-pages.sh
       shell: bash
