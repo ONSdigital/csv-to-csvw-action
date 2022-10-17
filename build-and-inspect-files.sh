@@ -1,7 +1,10 @@
 source file-patterns.sh
 source utils.sh
 
-if [[ -v $DEBUG && "$DEBUG" == true ]]
+# Fail on errors (and other things)
+set -euo pipefail
+
+if [[ "$DEBUG" == true ]]
 then
     set -x    
 fi
