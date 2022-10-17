@@ -45,6 +45,14 @@ function build_and_inspect_csvw {
 
     local out_dir="$RUNNER_TEMP/$(get_out_path "$csv_file")"
 
+    if [[ -d "$out_dir" ]]
+    then
+        # Sometimes the names of output files changes given different configurations,
+        # so we should delete the existing artifacts and regenerate them as a whole
+        # so that we don't end up with orphaned and confusing old files sitting around.
+        rm -rf "$out_dir"
+    fi
+
     echo "---Building CSV-W for $csv_file"
     echo "Building CSV-W"
     if [[ -f $json_file ]]; then

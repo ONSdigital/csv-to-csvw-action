@@ -21,9 +21,15 @@ inputs:
     description: "(WARNING: Advanced Configuration) Only convert CSV files which have a companion JSON configuration file into CSV-Ws."
     default: false
     required: false
+  debug:
+    description: "(WARNING: Advanced Configuration) Whether to output debug statements in order to help diagnose a fault or unexpected behaviour."
+    default: false
+    required: false
 
 runs:
   using: composite
+  env: 
+    DEBUG: ${{ fromJSON(inputs.debug) == true }}
   steps:
     - name: Set up Python 3.9
       uses: actions/setup-python@v2
