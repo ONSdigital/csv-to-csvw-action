@@ -25,6 +25,8 @@ function delete_csvw_outputs {
     then
         # Remove the files from the gh-pages branch as well.
 
+        git stash
+
         # Switch to the gh-pages branch
         git checkout gh-pages
 
@@ -34,8 +36,13 @@ function delete_csvw_outputs {
             git rm -r "$out_path"
         fi
 
+        git stash
+
         # Go back to the original branch/tag we were working on.
         git checkout "$GITHUB_REF_NAME"
+
+        # Reapply the changes we stashed from the "$GITHUB_REF_NAME" tag/branch.
+        git stash apply stash@{1}
     fi
 }
 

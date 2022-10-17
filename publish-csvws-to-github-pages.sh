@@ -6,6 +6,8 @@ git checkout gh-pages
 
 # Get the uncommitted changes we've been making to this branch throughout this action.
 cp -r "$RUNNER_TEMP/out" .
+# Pick up any file deletions stored in the stash
+git stash pop || true
 
 repo_name=${GITHUB_REPOSITORY#*/}    
 username=${GITHUB_REPOSITORY_OWNER}
