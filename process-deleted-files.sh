@@ -1,6 +1,9 @@
 source build-and-inspect-files.sh
 
-set -x
+if [ -v $DEBUG && "$DEBUG" == true ]
+then
+    set -x    
+fi
 
 echo "::set-output name=has_outputs::false"
 
@@ -67,7 +70,8 @@ for file in "${deleted_files[@]}"; do
     elif [[ $file_extension == "json" ]]; then
         config_file="$file"
         csv_file=$(get_companion_csv_file_for_json "$file")
-        if [[ -f "$csv_file" ]] && ! is_excluded_file "$csv_file"
+
+        if [[ -f "$csv_file" ]] && ! is_excluded_file "$csv_file" && [ "$JSON_CONFIG_REQUIRED" == false ]
         then
             # The JSON file has been deleted but the csv file still exists so we should rebuild it.
             build_and_inspect_csvw "$csv_file"

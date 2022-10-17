@@ -79,6 +79,7 @@ runs:
         FILES_ADDED_MODIFIED: ${{ steps.get-added-changed-removed-files.outputs.added_modified }}
         FILES_RENAMED: ${{ steps.get-added-changed-removed-files.outputs.renamed }}
         PATHS_TO_EXCLUDE_IN: ${{ inputs.paths-to-exclude }}
+        JSON_CONFIG_REQUIRED: ${{ inputs.config-required }}
         COMMIT_OUTPUTS_TO_GH_PAGES:  ${{ fromJSON(inputs.commit-outputs-to-branch) }}
       run: build-and-inspect-files.sh
       shell: bash
@@ -87,6 +88,7 @@ runs:
       id: process-deleted-files
       env:
         FILES_REMOVED: ${{ steps.get-added-changed-removed-files.outputs.removed }}
+        JSON_CONFIG_REQUIRED: ${{ inputs.config-required }}
         COMMIT_OUTPUTS_TO_GH_PAGES:  ${{ fromJSON(inputs.commit-outputs-to-branch) }}
       run: process-deleted-files.sh
       shell: bash

@@ -1,6 +1,9 @@
 echo "--Publishing Output to GitHub Pages"
 
-set -x    
+if [ -v $DEBUG && "$DEBUG" == true ]
+then
+    set -x    
+fi
 
 git checkout gh-pages
 

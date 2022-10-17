@@ -1,7 +1,10 @@
 source file-patterns.sh
 source utils.sh
 
-set -x
+if [ -v $DEBUG && "$DEBUG" == true ]
+then
+    set -x    
+fi
 
 function get_companion_json_file_for_csv {
     local csv_file="$1"
@@ -100,6 +103,11 @@ for file in "${detected_files[@]}"; do
     if [[ $file_extension == "csv" ]]; then
         csv_file="$file"
         config_file=$(get_companion_json_file_for_csv "$file")
+        if [ "$JSON_CONFIG_REQUIRED" == true && ! -f "$config_file" ]
+        then
+            echo "Could not find JSON config for $csv_file whilst `config-required` is true"
+            continue
+        fi
     elif [[ $file_extension == "json" ]]; then
         config_file="$file"
         csv_file=$(get_companion_csv_file_for_json "$file")
