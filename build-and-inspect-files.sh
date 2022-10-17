@@ -38,7 +38,7 @@ function build_and_inspect_csvw {
     local csv_file="$1"
     local json_file="$2"
 
-    local out_dir="$RUNNER_TEMP/$(get_out_path '$csv_file')"
+    local out_dir="$RUNNER_TEMP/$(get_out_path "$csv_file")"
 
     echo "---Building CSV-W for $csv_file"
     echo "Building CSV-W"
