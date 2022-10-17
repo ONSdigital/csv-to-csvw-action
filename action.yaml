@@ -59,7 +59,6 @@ runs:
     - name: Configure git
       run: |
         git config --global user.name "CSV-W from csv upload generator"
-        # Clear out the relevant stashes
         git pull
       shell: bash
 
