@@ -2,11 +2,14 @@ echo "--Publishing Output to GitHub Pages"
 
 git checkout -b gh-pages
 
+# Get the uncommitted changes we've been making to this branch throughout this action.
+git stash pop
+
 repo_name=${GITHUB_REPOSITORY#*/}    
 username=${GITHUB_REPOSITORY_OWNER}
 commit_id=${GITHUB_SHA}      
-mapfile -d ',' -t out_files < <(printf '%s,' $(find . -type f -path '*out/*'))
-processed_out_files=$(printf ",%s" "${out_files[@]}")
+mapfile -t out_files < <(printf '%s\n' $(find . -type f -path '*out/*'))
+processed_out_files=$(printf "\n%s" "${out_files[@]}")
 
 touch .nojekyll
 touch index.html
@@ -21,7 +24,7 @@ cat > index.html <<EOL
     <div id="files-container"></div>
     <script type="text/javascript">
         var html_str = "<ul>";
-        var files = "${processed_out_files}".split(',');
+        var files = "${processed_out_files}".split('\n');
         files.shift()
         files.sort()
         files.forEach(function(file) {
