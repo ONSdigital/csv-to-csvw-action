@@ -51,7 +51,7 @@ function build_and_inspect_csvw {
     fi
     
     echo "---Inspecting CSV-Ws for $csv_file"
-    mapfile -d $'\0' inspectable_files < <(find "${GITHUB_WORKSPACE}/${out_dir}" -name "*.csv-metadata.json" -type f -print0)
+    mapfile -d $'\0' inspectable_files < <(find "$out_dir" -name "*.csv-metadata.json" -type f -print0)
     for inspect_file in "${inspectable_files[@]}"; do
         echo "Inspecting file: ${inspect_file}"
         inspect_file_path="${inspect_file%/*}"

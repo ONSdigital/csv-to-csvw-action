@@ -57,7 +57,6 @@ runs:
         git config --global user.name "CSV-W from csv upload generator"
         # Clear out the relevant stashes
         git pull
-        git stash clear
       shell: bash
 
     - name: Update gh-pages and clear branch
@@ -65,7 +64,6 @@ runs:
       run: |
         git checkout gh-pages || git checkout -b gh-pages
         git pull
-        git stash clear
         git checkout "$GITHUB_REF_NAME"
       shell: bash
 
@@ -105,7 +103,7 @@ runs:
       run: |
         echo "--Commiting Outputs to Main Branch"
 
-        cp -r "$RUNNER_TEMP/out/*" out
+        cp -r "$RUNNER_TEMP/out" .
 
         git add out/
         git commit -m "CSV-W Updates - $(date +'%d-%m-%Y at %H:%M:%S')"
