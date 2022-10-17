@@ -86,7 +86,7 @@ function build_and_inspect_csvw {
         # Place all uncommitted files back into the stash
         git stash        
         # Go back to the original branch/tag we were working on.
-        git checkout "$GITHUB_REF"
+        git checkout "$GITHUB_REF_NAME"
         # Load any uncommitted files back from the stash in the original branch/tag
         git stash pop
     fi
