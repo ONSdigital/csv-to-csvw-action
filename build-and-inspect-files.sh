@@ -103,7 +103,7 @@ for file in "${detected_files[@]}"; do
     if [[ $file_extension == "csv" ]]; then
         csv_file="$file"
         config_file=$(get_companion_json_file_for_csv "$file")
-        if [ "$JSON_CONFIG_REQUIRED" == true && ! -f "$config_file" ]
+        if [[ "$JSON_CONFIG_REQUIRED" == true && ! -f "$config_file" ]]
         then
             echo "Could not find JSON config for $csv_file whilst `config-required` is true"
             continue
