@@ -90,7 +90,7 @@ To use the csv-to-csvw GitHub action,
         steps:
         - name: csv-to-csvw action # csv-to-csvw action step
             # csv-to-csvw action path. The latest version is always available at https://github.com/marketplace/actions/csv-to-csvw-action
-            uses: GSS-Cogs/csv-to-csvw-action@v0.0.29-alpha
+            uses: GSS-Cogs/csv-to-csvw-action@v0.0.30
             # Configurations
             with:
             # Boolean indicating whether the outputs (i.e. out folder) should be committed to the current branch (default is true).
@@ -98,10 +98,10 @@ To use the csv-to-csvw GitHub action,
             # Boolean indicating whether the outputs (i.e. out folder) should be published to the gh-pages branch and GitHub Pages (default is true).
             publish-to-gh-pages: true
             # File paths which csv-to-csvw should avoid converting into CSV-Ws
+            # 1. This will ignore all files immediately in the `ignore` directory.
+            # 2. This will recursively ignore all files in any subfolders of the `ignore` directory.
             paths-to-exclude: |
-                # This will ignore all files immediately in the `ignore` directory.
                 ignore/*
-                # This will recursively ignore all files in any subfolders of the `ignore` directory.
                 ignore/**/*
             # (WARNING: Advanced Configuration) Boolean indicating whether to only convert CSV files which have a companion JSON configuration file into CSV-Ws.
             config-required: false
