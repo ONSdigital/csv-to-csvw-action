@@ -22,8 +22,8 @@ git stash pop || true
 repo_name=${GITHUB_REPOSITORY#*/}    
 username=${GITHUB_REPOSITORY_OWNER}
 commit_id=${GITHUB_SHA}      
-mapfile -t out_files < <(printf '%s\n' $(find . -type f -path 'out/*'))
-processed_out_files=$(printf "\n%s" "${out_files[@]}")
+mapfile -t out_files < <(printf '%s\n' $(find out -type f -name '*'))
+processed_out_files=$(printf "|||%s" "${out_files[@]}")
 
 touch .nojekyll
 touch index.html
@@ -38,7 +38,7 @@ cat > index.html <<EOL
     <div id="files-container"></div>
     <script type="text/javascript">
         var html_str = "<ul>";
-        var files = "${processed_out_files}".split('\n');
+        var files = "${processed_out_files}".split('|||');
         files.shift()
         files.sort()
         files.forEach(function(file) {
