@@ -4,7 +4,7 @@ on:
   push:
     branches:
       #- main
-      - 11-bug-fix
+      # - 11-bug-fix
 
 jobs:
   generate_csvw_from_csv_upload:
