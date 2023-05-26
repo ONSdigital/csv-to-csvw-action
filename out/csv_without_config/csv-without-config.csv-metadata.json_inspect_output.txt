@@ -1,0 +1,54 @@
+
+- This file is a data cube.
+
+
+        - The data cube has the following catalog metadata:
+          - Title: Csv Without Config
+          - Label: Csv Without Config
+          - Issued: 2023-05-26T10:27:44.683875
+          - Modified: 2023-05-26T10:27:44.683875
+          - License: None
+          - Creator: None
+          - Publisher: None
+          - Landing Pages: None
+          - Themes: None
+          - Keywords: None
+          - Contact Point: None
+          - Identifier: Csv Without Config
+          - Comment: None
+          - Description: None
+        
+
+ - The data cube has the following column component information: 
+    - Dataset Label: Csv Without Config
+    - Columns: 
+        Title         Type  Required                                                Property URL Observations Column Titles
+    Dimension    Dimension      True                  csv-without-config.csv#dimension/dimension                           
+        Value Observations      True                   csv-without-config.csv#measure/{+measure}                           
+      Measure     Measures      True                http://purl.org/linked-data/cube#measureType                           
+         Unit        Units      True http://purl.org/linked-data/sdmx/2009/attribute#unitMeasure                           
+    - Columns where suppress output is true: None
+
+- The data cube has the following code list information:
+        - Number of Code Lists: 1
+        - Code Lists:
+              Code List Code List Label Columns Used In
+dimension.csv#code-list       Dimension       Dimension
+
+- The data cube has the following dataset information:
+        - Number of Observations: 5
+        - Number of Duplicates: 0
+        - Observations: 
+Dimension  Value Measure Unit
+        a    0.0  length   cm
+        b    1.0  length   cm
+        c    2.0  length   cm
+        d    3.0  length   cm
+        e    4.0  length   cm
+        
+
+- The data cube has the following value counts:
+        - Value counts broken-down by measure and unit (of measure):
+Measure Unit  Count
+ length   cm      5
+        
