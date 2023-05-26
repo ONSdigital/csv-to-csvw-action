@@ -1,0 +1,44 @@
+
+- This file is a code list.
+
+
+        - The code list has the following catalog metadata:
+          - Title: Dimension
+          - Label: Dimension
+          - Issued: 2023-05-26T10:06:39.878855
+          - Modified: 2023-05-26T10:06:39.878855
+          - License: None
+          - Creator: None
+          - Publisher: None
+          - Landing Pages: None
+          - Themes: None
+          - Keywords: None
+          - Contact Point: None
+          - Identifier: Dimension
+          - Comment: None
+          - Description: None
+        
+
+- The code list has the following dataset information:
+        - Number of Concepts: 5
+        - Number of Duplicates: 0
+        - Concepts: 
+Uri Identifier Label Notation  Parent Uri Identifier  Sort Priority  Description
+             a     A        a                    NaN              0          NaN
+             b     B        b                    NaN              1          NaN
+             c     C        c                    NaN              2          NaN
+             d     D        d                    NaN              3          NaN
+             e     E        e                    NaN              4          NaN
+        
+
+- The code list has the following concepts information:
+        - Concepts hierarchy depth: 1
+        - Concepts hierarchy:
+root
+├── A
+├── B
+├── C
+├── D
+└── E
+
+        
