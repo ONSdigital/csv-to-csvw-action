@@ -27,6 +27,6 @@ generate_csvw_from_csv_upload:
             ignore/*
             ignore/**/*
         # (WARNING: Advanced Configuration) Boolean indicating whether to only convert CSV files which have a companion JSON configuration file into CSV-Ws.
-        config-required: false
+        config-required: true
         # (WARNING: Advanced Configuration) Boolean indicating whether to output debug statements in order to help diagnose a fault or unexpected behaviour.
         debug: false
