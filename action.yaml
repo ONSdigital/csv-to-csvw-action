@@ -19,7 +19,7 @@ inputs:
     required: false
   config-required:
     description: "(WARNING: Advanced Configuration) Only convert CSV files which have a companion JSON configuration file into CSV-Ws."
-    default: false
+    default: true
     required: false
   debug:
     description: "(WARNING: Advanced Configuration) Whether to output debug statements in order to help diagnose a fault or unexpected behaviour."
