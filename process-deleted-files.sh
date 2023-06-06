@@ -52,7 +52,7 @@ function delete_csvw_outputs {
 
         if [[ -n "$stash_content" ]]; then # Reapply the changes we stashed from the "$GITHUB_REF_NAME" tag/branch.
             git stash apply stash@{1}
-        else;
+        else
             echo "stash was empty."
         fi
     fi
