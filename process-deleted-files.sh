@@ -50,7 +50,7 @@ function delete_csvw_outputs {
         # Go back to the original branch/tag we were working on.
         git checkout "$GITHUB_REF_NAME"
 
-        if [[ -n "$stash_content"]]; then # Reapply the changes we stashed from the "$GITHUB_REF_NAME" tag/branch.
+        if [[ -n "$stash_content" ]]; then # Reapply the changes we stashed from the "$GITHUB_REF_NAME" tag/branch.
             git stash apply stash@{1}
         else;
             echo "stash was empty."
