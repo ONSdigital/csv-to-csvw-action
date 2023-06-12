@@ -19,7 +19,6 @@ deleted_files+=(${excluded_files[@]})
 mapfile -t deleted_files < <(printf "%s\n" "${deleted_files[@]}" | sort)
 
 function delete_csvw_outputs {
-    echo "has_outputs=true" >> $GITHUB_OUTPUT
 
     local csv_file="$1"
     local out_path=$(get_out_path "$csv_file")
@@ -45,12 +44,18 @@ function delete_csvw_outputs {
         fi
 
         git stash
-
+        
         # Go back to the original branch/tag we were working on.
         git checkout "$GITHUB_REF_NAME"
+        
+        local stash_content=$(git stash list)
 
-        # Reapply the changes we stashed from the "$GITHUB_REF_NAME" tag/branch.
-        git stash apply stash@{1}
+        if [[ -n "$stash_content" ]]; then # Reapply the changes we stashed from the "$GITHUB_REF_NAME" tag/branch.
+            git stash apply stash@{1}
+            echo "has_outputs=true" >> $GITHUB_OUTPUT
+        else
+            echo "stash was empty."
+        fi
     fi
 }
 
