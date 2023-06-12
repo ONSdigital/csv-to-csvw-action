@@ -44,10 +44,11 @@ function delete_csvw_outputs {
         fi
 
         git stash
-
-        local stash_content=$(git stash list)
+        
         # Go back to the original branch/tag we were working on.
         git checkout "$GITHUB_REF_NAME"
+        
+        local stash_content=$(git stash list)
 
         if [[ -n "$stash_content" ]]; then # Reapply the changes we stashed from the "$GITHUB_REF_NAME" tag/branch.
             git stash apply stash@{1}
