@@ -13,6 +13,7 @@ The action expects the user to organise the inputs as follows:
 * The CSV files and their configuration JSONs can be at any location inside the repository which isn't inside a top-level folder called `out`. The `out` folder is reserved for storing the outputs produced by the action.
 * If a CSV file has a configuration JSON, the filename of the configuration JSON needs to match the filename of the CSV file. And both files need to be stored at the same location. For example, `csv/my_data.csv` and `csv/my_data.json`.
 
+The action uses the file name and file path to generate the outputs of the build and inspect commands. The names are used subsequently to handle the deletion of the files.
 
 ## Build process
 
