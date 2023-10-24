@@ -35,7 +35,7 @@ runs:
         python-version: 3.9
 
     - name: Install csvcubed
-      run: pip install csvcubed
+      run: pip install "csvcubed<0.5"
       shell: bash
 
     - name: Verify csvcubed installation
