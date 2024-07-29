@@ -25,6 +25,10 @@ inputs:
     description: "(WARNING: Advanced Configuration) Whether to output debug statements in order to help diagnose a fault or unexpected behaviour."
     default: false
     required: false
+  csvcubed-version:
+    description: The version of csvcubed to use in the csv-to-csvw-action
+    default: "csvcubed"
+    required: false
 
 runs:
   using: composite
@@ -35,7 +39,7 @@ runs:
         python-version: 3.9
 
     - name: Install csvcubed
-      run: pip install "csvcubed<0.5"
+      run: pip install ${{ inputs.csvcubed-version }}
       shell: bash
 
     - name: Verify csvcubed installation
