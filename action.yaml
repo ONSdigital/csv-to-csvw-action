@@ -107,7 +107,6 @@ runs:
       uses: actions/upload-artifact@v4
       with:
         name: assets-for-download
-        include-hidden-files: true
         path: out
 
     - name: Commit generated CSV-Ws and logs to the repository
