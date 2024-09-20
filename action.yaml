@@ -104,7 +104,7 @@ runs:
 
     - name: Publish CSV-Ws and logs to artefacts
       if: ${{ fromJSON(steps.build-and-inspect-files.outputs.has_outputs) == true }}
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
         name: assets-for-download
         path: out
